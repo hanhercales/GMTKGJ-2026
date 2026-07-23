@@ -1,0 +1,122 @@
+using System;
+using TMPro;
+using UnityEngine;
+
+public class CountdownTimer : MonoBehaviour
+{
+    public static CountdownTimer Instance{get; private set;}
+
+    [Header("Settings")]
+    [SerializeField] private float startingTime = 60f;
+    [SerializeField] private bool startOnAwake = true;
+    
+    [Header("UI")]
+    [SerializeField] private TextMeshProUGUI countdownText;
+    [SerializeField] private string timeFormat = "mm\\:ss";
+    
+    public float StartingTime => startingTime;
+    public float RemainingTime { get; private set; }
+    public bool IsRunning { get; private set; }
+    public bool IsGameOver { get; private set; }
+
+    public event Action OnCountdownFinished;
+    public event Action<float> OnTimeChanged;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
+        Instance = this;
+    }
+
+    private void Start()
+    {
+        RemainingTime = startingTime;
+        UpdateDisplay();
+
+        if (startOnAwake)
+            StartCountdown();
+    }
+
+    private void Update()
+    {
+        RunTimer();
+    }
+
+    public void StartCountdown()
+    {
+        if(IsGameOver)  return;
+        IsRunning = true;
+    }
+    
+    public void PauseCountdown() => IsRunning = false;
+    
+    public void ResumeCountdown()
+    { 
+        if(IsGameOver) return;
+        IsRunning = true;
+    }
+
+    public void ResetCountdown(float? newStartingTime = null)
+    {
+        if(newStartingTime.HasValue)
+            startingTime = newStartingTime.Value;
+        
+        RemainingTime = startingTime;
+        IsGameOver = false;
+        IsRunning = false;
+        UpdateDisplay();
+    }
+
+    private void RunTimer()
+    {
+        if (!IsRunning || IsGameOver) return;
+        
+        RemainingTime -= Time.deltaTime;
+
+        if (RemainingTime <= 0f)
+        {
+            RemainingTime = 0f;
+            EndCountdown();
+        }
+        
+        OnTimeChanged?.Invoke(RemainingTime);
+        UpdateDisplay();
+    }
+
+    public void AddTime(float time)
+    {
+        if(IsGameOver || time <= 0f) return;
+        
+        RemainingTime += time;
+        
+        OnTimeChanged?.Invoke(RemainingTime);
+        UpdateDisplay();
+    }
+
+    public void SubstractTime(float time)
+    {
+        if (IsGameOver || time <= 0f) return;
+        
+        RemainingTime = Mathf.Max(0f, RemainingTime - time);
+        OnTimeChanged?.Invoke(RemainingTime);
+        UpdateDisplay();
+
+        if (RemainingTime <= 0f)
+            EndCountdown();
+    }
+
+    private void EndCountdown()
+    {
+        IsRunning = false;
+        IsGameOver = true;
+        OnCountdownFinished?.Invoke();
+    }
+
+    private void UpdateDisplay()
+    {
+        if (countdownText == null) return;
+
+        TimeSpan timeSpan = TimeSpan.FromSeconds(Mathf.Max(0f, RemainingTime));
+        countdownText.text = timeSpan.ToString(timeFormat);
+    }
+}
