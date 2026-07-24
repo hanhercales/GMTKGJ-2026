@@ -7,6 +7,9 @@ public class InputManager : MonoBehaviour
     public static InputManager Instance { get; private set; }
 
     [SerializeField] private LayerMask interactableLayers = ~0;
+    
+    private Vector2 lastPointerPos;
+    private bool hasLastPointerPos;
 
     private InputAction clickAction;
     private InputAction pointAction;
@@ -41,6 +44,20 @@ public class InputManager : MonoBehaviour
     {
         if(currentDragTarget != null)
             currentDragTarget.OnDragUpdate(GetPointerWorldPos());
+
+        UpdateMouseSpeed();
+    }
+
+    private void UpdateMouseSpeed()
+    {
+        if (Mouse.current == null) return;
+        
+        Vector2 delta = Mouse.current.delta.ReadValue();
+        
+        float normalizedDelta = delta.magnitude / Screen.height;
+        float speed = normalizedDelta / Time.deltaTime;
+
+        CountdownTimer.Instance.SetSpeedMult(speed);
     }
 
     private void OnClickStarted(InputAction.CallbackContext context)
