@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 260242336252839075}
   - component: {fileID: 4286961137525763503}
   - component: {fileID: 2293184384632464137}
+  - component: {fileID: -6593700191045146876}
   m_Layer: 0
   m_Name: AceOfSpades
   m_TagString: Untagged
@@ -166,5 +167,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardDrop
   spriteRenderer: {fileID: 8835169789461895135}
   clickedSprite: {fileID: 21300000, guid: af169e90d69d09f4b982839b6c7cd20f, type: 3}
-  rotateSpeedDegPerSec: 180
-  amount: 13
+--- !u!114 &-6593700191045146876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5691152517466711750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a37289751e9de874494cd6819899186b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MoneyRewards
+  moneyAmount: 2

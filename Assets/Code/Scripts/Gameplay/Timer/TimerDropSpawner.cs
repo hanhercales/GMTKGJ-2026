@@ -19,6 +19,7 @@ public class TimerDropSpawner : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (!other.collider.TryGetComponent(out ThrowTask _)) return;
+        if (!CardHandManager.Instance.HasRoom) return;
         if (Random.value > dropChance) return;
 
         Vector2 contactPoint = other.GetContact(0).point;

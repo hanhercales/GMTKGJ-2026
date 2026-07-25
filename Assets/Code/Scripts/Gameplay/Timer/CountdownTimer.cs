@@ -166,16 +166,4 @@ public class CountdownTimer : MonoBehaviour
         TimeSpan timeSpan = TimeSpan.FromSeconds(Mathf.Max(0f, RemainingTime));
         countdownText.text = timeSpan.ToString(timeFormat);
     }
-    
-    public void HideDisplayFor(float duration)
-    {
-        StartCoroutine(HideDisplayRoutine(duration));
-    }
-
-    private IEnumerator HideDisplayRoutine(float duration)
-    {
-        countdownText.enabled = false;
-        yield return new WaitForSeconds(duration);
-        countdownText.enabled = true;
-    }
 }
