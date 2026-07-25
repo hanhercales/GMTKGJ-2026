@@ -14,7 +14,7 @@ public class InputManager : MonoBehaviour
     private InputAction clickAction;
     private InputAction pointAction;
 
-    private IDragInputHandler currentDragTarget;
+    private IPointerInputHandler currentTarget;
 
     private void Awake()
     {
@@ -42,8 +42,8 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
-        if(currentDragTarget != null)
-            currentDragTarget.OnDragUpdate(GetPointerWorldPos());
+        if(currentTarget != null)
+            currentTarget.OnDragUpdate(GetPointerWorldPos());
 
         UpdateMouseSpeed();
     }
@@ -66,21 +66,20 @@ public class InputManager : MonoBehaviour
         Collider2D hit = Physics2D.OverlapPoint(worldPos, interactableLayers);
         if (hit == null) return;
 
-        if (hit.TryGetComponent(out IDragInputHandler dragHandler))
+        if (hit.TryGetComponent(out IPointerInputHandler handler))
         {
-            currentDragTarget = dragHandler;
-            dragHandler.OnDragStart(worldPos);
+            currentTarget = handler;
+            handler.OnClickDown(worldPos);
+            handler.OnDragStart(worldPos);
         }
-        else if(hit.TryGetComponent(out IClickInputHandler clickHandler))
-            clickHandler.OnClickDown(worldPos);
     }
 
     private void OnClickCanceled(InputAction.CallbackContext context)
     {
-        if (currentDragTarget == null) return;
+        if (currentTarget == null) return;
         
-        currentDragTarget.OnDragEnd(GetPointerWorldPos());
-        currentDragTarget = null;
+        currentTarget.OnDragEnd(GetPointerWorldPos());
+        currentTarget = null;
     }
 
     private Vector2 GetPointerWorldPos()

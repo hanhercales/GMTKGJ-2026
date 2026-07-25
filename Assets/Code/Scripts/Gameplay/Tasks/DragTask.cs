@@ -1,8 +1,8 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider2D))]
-public class DragTask : TaskBase, IDragInputHandler
+[RequireComponent(typeof(PointerReceiver))]
+public class DragTask : TaskBase
 {
     [Header("Settings")] 
     [SerializeField] private Transform handle;
@@ -10,23 +10,42 @@ public class DragTask : TaskBase, IDragInputHandler
     [SerializeField] private float requiredDistance = 2f;
     [SerializeField] private bool reset = true;
     
+    private PointerReceiver receiver;
     private Vector3 startPos;
     private Vector2 pointerStartWPos;
     private float draggedDist;
 
     private void Awake()
     {
+        receiver = GetComponent<PointerReceiver>();
+        
         if(handle == null) handle = transform;
         startPos = handle.position;
     }
+    
+    private void OnEnable()
+    {
+        receiver.DragStart += HandleDragStart;
+        receiver.DragUpdate += HandleDragUpdate;
+        receiver.DragEnd += HandleDragEnd;
+    }
 
-    public void OnDragStart(Vector2 worldPos)
+    private void OnDisable()
+    {
+        receiver.DragStart -= HandleDragStart;
+        receiver.DragUpdate -= HandleDragUpdate;
+        receiver.DragEnd -= HandleDragEnd;
+    }
+
+    public void HandleDragStart(Vector2 worldPos)
     {
         if (IsCompleted) return;
         pointerStartWPos = worldPos;
+        
+        CountdownTimer.Instance.PauseCountdown();
     }
 
-    public void OnDragUpdate(Vector2 worldPos)
+    public void HandleDragUpdate(Vector2 worldPos)
     {
         if(IsCompleted) return;
 
@@ -42,8 +61,10 @@ public class DragTask : TaskBase, IDragInputHandler
         }
     }
 
-    public void OnDragEnd(Vector2 worldPos)
+    public void HandleDragEnd(Vector2 worldPos)
     {
+        CountdownTimer.Instance.ResumeCountdown();
+        
         if (IsCompleted) return;
 
         if (reset)
@@ -51,11 +72,6 @@ public class DragTask : TaskBase, IDragInputHandler
             draggedDist = 0f;
             handle.position = startPos;
         }
-    }
-
-    private Vector2 GetMouseWPos()
-    {
-        return Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
     protected override void OnTaskCompleted()

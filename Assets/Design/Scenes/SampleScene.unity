@@ -234,6 +234,7 @@ GameObject:
   - component: {fileID: 475202936}
   - component: {fileID: 475202932}
   - component: {fileID: 475202931}
+  - component: {fileID: 475202937}
   m_Layer: 3
   m_Name: DepToOng
   m_TagString: Untagged
@@ -274,7 +275,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0.7
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -398,6 +399,18 @@ CapsuleCollider2D:
   m_Offset: {x: -0.0000004768372, y: 5.684342e-14}
   m_Size: {x: 1.3214604, y: 0.54688025}
   m_Direction: 1
+--- !u!114 &475202937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 475202930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab85a167061eb054d9356ec86e6dc3af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PointerReceiver
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -775,7 +788,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_MaskInteraction: 0
   m_Sprite: {fileID: -1557013538026691241, guid: d386967dad74a9f4492dac04659e991a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1138,6 +1151,7 @@ GameObject:
   - component: {fileID: 1975152292}
   - component: {fileID: 1975152291}
   - component: {fileID: 1975152294}
+  - component: {fileID: 1975152295}
   m_Layer: 0
   m_Name: CountdownTimer
   m_TagString: Untagged
@@ -1290,6 +1304,25 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.8, y: 0.9}
   m_EdgeRadius: 0
+--- !u!114 &1975152295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1975152290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98659cccbf2305b4db2f105e8855e632, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TimerDropSpawner
+  dropPool:
+  - {fileID: 1815573803767767245, guid: 7ec356379dbcd66459b6dc0d5c684365, type: 3}
+  dropChance: 1
+  spawnDelay: 0.3
+  throwForce: 3
+  throwAngleRange: {x: 45, y: 135}
+  maxSpinSpeed: 90
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -15,10 +15,10 @@ public class CountdownTimer : MonoBehaviour
     [SerializeField] private string timeFormat = "mm\\:ss";
 
     [Header("Timer Speed")] 
-    [SerializeField] private float[] risingThresholds = { 0.5f, 1.5f, 3f };
-    [SerializeField] private float[] fallingThresholds = { 0.3f, 1.2f, 2.5f };
+    [SerializeField] private float[] risingThresholds = { 1.5f, 3f };
+    [SerializeField] private float[] fallingThresholds = { 1.2f, 2.5f };
 
-    private int speedMult = 0;
+    private int speedMult = 1;
 
     public float StartingTime => startingTime;
     public float RemainingTime { get; private set; }
@@ -115,7 +115,7 @@ public class CountdownTimer : MonoBehaviour
     {
         if (speedMult < risingThresholds.Length && rawSpeed >= risingThresholds[speedMult])
             speedMult++;
-        else if (speedMult > 0 && rawSpeed < fallingThresholds[speedMult - 1])
+        else if (speedMult > 1 && rawSpeed < fallingThresholds[speedMult - 1])
             speedMult--;
     }
 

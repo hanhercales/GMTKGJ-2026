@@ -2,34 +2,25 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-[RequireComponent(typeof(Collider2D))]
-public class ClickTask : TaskBase, IClickInputHandler
+[RequireComponent(typeof(PointerReceiver))]
+public class ClickTask : TaskBase
 {
     [Header("Settings")] [SerializeField] private int requiredClicks = 1;
     
-    private Collider2D col;
+    private int currentClicks = 0;
+    private PointerReceiver receiver;
     
-    public int CurrentClicks { get;  private set; }
+    private void Awake() => receiver = GetComponent<PointerReceiver>();
 
-    private void Awake()
+    private void OnEnable() => receiver.ClickDown += HandleClick;
+
+    private void OnDisable() => receiver.ClickDown -= HandleClick;
+
+    private void HandleClick(Vector2 worldPos)
     {
-        col = GetComponent<Collider2D>();
-    }
-
-    public void OnClickDown(Vector2 worldPos)
-    {
-        if (IsCompleted) return;
-
-        CurrentClicks++;
-
-        if (CurrentClicks >= requiredClicks)
-        {
-            CompleteTask();
-        }
-    }
-
-    protected override void OnTaskCompleted()
-    {
+        if(IsCompleted) return;
+        currentClicks++;
         
+        if(currentClicks >= requiredClicks) CompleteTask();
     }
 }
