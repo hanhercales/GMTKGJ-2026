@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -19,6 +20,8 @@ public class CountdownTimer : MonoBehaviour
     [SerializeField] private float[] fallingThresholds = { 1.2f, 2.5f };
 
     private int speedMult = 1;
+    private bool isSpeedOverridden;
+    private float overrideTimeRemaining;
 
     public float StartingTime => startingTime;
     public float RemainingTime { get; private set; }
@@ -45,6 +48,12 @@ public class CountdownTimer : MonoBehaviour
 
     private void Update()
     {
+        if (isSpeedOverridden)
+        {
+            overrideTimeRemaining -= Time.unscaledDeltaTime;
+            if(overrideTimeRemaining <= 0f) isSpeedOverridden = false;
+        }
+        
         RunTimer();
     }
 
@@ -110,9 +119,18 @@ public class CountdownTimer : MonoBehaviour
         if (RemainingTime <= 0f)
             EndCountdown();
     }
+    
+    public void OverrideSpeedMult(int forcedMult, float duration)
+    {
+        speedMult = forcedMult;
+        isSpeedOverridden = true;
+        overrideTimeRemaining = duration;
+    }
 
     public void SetSpeedMult(float rawSpeed)
     {
+        if (isSpeedOverridden) return;
+        
         if (speedMult < risingThresholds.Length && rawSpeed >= risingThresholds[speedMult])
             speedMult++;
         else if (speedMult > 1 && rawSpeed < fallingThresholds[speedMult - 1])
@@ -132,5 +150,17 @@ public class CountdownTimer : MonoBehaviour
 
         TimeSpan timeSpan = TimeSpan.FromSeconds(Mathf.Max(0f, RemainingTime));
         countdownText.text = timeSpan.ToString(timeFormat);
+    }
+    
+    public void HideDisplayFor(float duration)
+    {
+        StartCoroutine(HideDisplayRoutine(duration));
+    }
+
+    private IEnumerator HideDisplayRoutine(float duration)
+    {
+        countdownText.enabled = false;
+        yield return new WaitForSeconds(duration);
+        countdownText.enabled = true;
     }
 }

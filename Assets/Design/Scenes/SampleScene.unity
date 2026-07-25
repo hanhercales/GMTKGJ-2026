@@ -260,6 +260,7 @@ MonoBehaviour:
   maxLaunchForce: 10
   targetTag: Target
   settleVelocityThreshold: 0.05
+  settleGraceTime: 0.15
 --- !u!50 &475202932
 Rigidbody2D:
   serializedVersion: 5
@@ -1318,11 +1319,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TimerDropSpawner
   dropPool:
   - {fileID: 1815573803767767245, guid: 7ec356379dbcd66459b6dc0d5c684365, type: 3}
-  dropChance: 1
+  - {fileID: 5691152517466711750, guid: 8f607bf4e85263942916f282c0d70bd5, type: 3}
+  - {fileID: 579797491817073433, guid: 38011468b777c3a4497c000264cc60a7, type: 3}
+  - {fileID: 2760405385852651869, guid: 8700cfc918c8d5347b64716b1dc13b30, type: 3}
+  - {fileID: 823643063940817835, guid: bfabb8d85ad22074da7e3d0537ed1d62, type: 3}
+  - {fileID: 6061086890180259334, guid: a25654bdfef73034f8cdb80a92f1fa51, type: 3}
+  - {fileID: 9158009026172343722, guid: e3e3b1ed12fe77c46bce4487b5660fa9, type: 3}
+  - {fileID: 1417674018225319021, guid: be55f47a21979f844bb0707aba627576, type: 3}
+  - {fileID: 7985667241921846237, guid: 632b9fdd2cc4ac341b232a96f095bb3d, type: 3}
+  dropChance: 0.3
   spawnDelay: 0.3
-  throwForce: 3
-  throwAngleRange: {x: 45, y: 135}
-  maxSpinSpeed: 90
+  targetRangeMin: {x: -4, y: -3}
+  targetRangeMax: {x: 4, y: -1}
+  flySpeed: 8
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
