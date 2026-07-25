@@ -28,6 +28,15 @@ public class CountdownTimer : MonoBehaviour
     public bool IsRunning { get; private set; }
     public bool IsGameOver { get; private set; }
 
+    /// <summary>Alias for RemainingTime - this is the "ClockService.CurrentSeconds" of DESIGN.md §7.2.</summary>
+    public float CurrentSeconds => RemainingTime;
+
+    /// <summary>
+    /// Multiplies tick speed on top of the existing mouse-speed multiplier.
+    /// Phone/cards (Slow Hand, Rush, Robocalls) write this. Nothing else should.
+    /// </summary>
+    public float TickMultiplier { get; set; } = 1f;
+
     public event Action OnCountdownFinished;
     public event Action<float> OnTimeChanged;
 
@@ -86,7 +95,7 @@ public class CountdownTimer : MonoBehaviour
     {
         if (!IsRunning || IsGameOver) return;
         
-        RemainingTime -= Time.deltaTime * speedMult;
+        RemainingTime -= Time.deltaTime * speedMult * TickMultiplier;
 
         if (RemainingTime <= 0f)
         {
@@ -126,6 +135,12 @@ public class CountdownTimer : MonoBehaviour
         isSpeedOverridden = true;
         overrideTimeRemaining = duration;
     }
+
+    /// <summary>ClockService.AddSeconds(s, reason) of DESIGN.md §7.2 - Meter and egg timer only.</summary>
+    public void AddSeconds(float seconds, string reason) => AddTime(seconds);
+
+    /// <summary>ClockService.Spend(s, reason) of DESIGN.md §7.2 - blackjack ante, penalties.</summary>
+    public void Spend(float seconds, string reason) => SubstractTime(seconds);
 
     public void SetSpeedMult(float rawSpeed)
     {
