@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 7a91c396eac669848aa0527f2097802e
+guid: e46ac0683d772ee4c9096a76d2ba743f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5280028390198641020
-    second: DepToOng_0
+      213: -108591889114453360
+    second: KRDCD-KamenRide_Decade_Rider_Card_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,12 +46,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 384
+  spritePixelsToUnits: 97.5
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: DepToOng_0
+      name: KRDCD-KamenRide_Decade_Rider_Card_0
       rect:
         serializedVersion: 2
-        x: 160
-        y: 360
-        width: 681
-        height: 280
+        x: 0
+        y: 0
+        width: 89
+        height: 129
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c7184c998dd664940800000000000000
-      internalID: 5280028390198641020
+      spriteID: 09a28df80443e7ef0800000000000000
+      internalID: -108591889114453360
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      DepToOng_0: 5280028390198641020
+      KRDCD-KamenRide_Decade_Rider_Card_0: -108591889114453360
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
