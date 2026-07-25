@@ -8,9 +8,7 @@ using UnityEngine;
 public class MoneyService : MonoBehaviour
 {
     public static MoneyService Instance { get; private set; }
-
-    [SerializeField] private GameConfig config;
-
+    
     public int Current { get; private set; }
 
     /// <summary>Fired after every change. reason feeds the balance log (DESIGN.md §7.2).</summary>
@@ -21,7 +19,7 @@ public class MoneyService : MonoBehaviour
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
 
-        Current = config != null ? config.startMoney : 0;
+        Current = GameManager.Instance.GameConfig != null ? GameManager.Instance.GameConfig.startMoney : 0;
     }
 
     public void Add(int amount, string reason)
