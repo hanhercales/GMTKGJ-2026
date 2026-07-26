@@ -14,6 +14,8 @@ public class Phone : InteractableHandler, IPawnable
     public static Phone Instance { get; private set; }
 
     [SerializeField] private GameObject ringingVisual;
+    [SerializeField] private AudioClip ringSound;
+    [SerializeField] private AudioSource audioSource;
     
     [Header("Pawn")]
     [SerializeField] private int pawnValue = 20;

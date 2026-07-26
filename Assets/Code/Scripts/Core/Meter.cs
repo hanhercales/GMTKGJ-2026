@@ -9,17 +9,12 @@ using UnityEngine;
 /// </summary>
 [RequireComponent(typeof(PointerReceiver))]
 [RequireComponent(typeof(Collider2D))]
-public class Meter : MonoBehaviour, IPawnable
+public class Meter : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI moneyText;
     
     private PointerReceiver receiver;
     
-    [Header("Pawn")]
-    [SerializeField] private int pawnValue = 20;
-    
-    public int PawnValue => pawnValue;
-
     private void Awake()
     {
         receiver = GetComponent<PointerReceiver>();
