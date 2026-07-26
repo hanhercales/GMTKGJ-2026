@@ -21,13 +21,15 @@ public class Tax : MonoBehaviour
     [SerializeField] private Button payButton;
     [SerializeField] private TextMeshProUGUI payButtonLabel;
     [SerializeField] private Button ignoreButton;
-    
+    [SerializeField] private Button closeButton;
+
     private ITRSService.Assessment current;
 
     private void Awake()
     {
         payButton.onClick.AddListener(HandlePay);
         ignoreButton.onClick.AddListener(HandleIgnore);
+        closeButton.onClick.AddListener(HandleClose);
     }
 
     public void Show(ITRSService.Assessment assessment)
@@ -58,4 +60,8 @@ public class Tax : MonoBehaviour
         ITRSService.Instance.Ignore();
         gameObject.SetActive(false);
     }
+
+    // Closing without deciding must still resolve the bill - otherwise HasPendingAssessment
+    // stays true forever and AnnoyanceManager stays busy, blocking every later annoyance.
+    private void HandleClose() => HandleIgnore();
 }

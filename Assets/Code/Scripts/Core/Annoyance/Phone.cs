@@ -39,7 +39,12 @@ public class Phone : InteractableHandler, IPawnable
         base.Awake();
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
+    }
 
+    private void Start()
+    {
+        // Not Awake: GameManager/RngService's own Awake isn't guaranteed to run first
+        // (see HANDOFF.md §3). Start() only runs after every object's Awake completes.
         ScheduleNextRing();
     }
 
@@ -79,6 +84,7 @@ public class Phone : InteractableHandler, IPawnable
 
         ringElapsed += Time.deltaTime;
 
+        GameConfig cfg = GameManager.Instance.GameConfig;
         if (answeringElapsed >= 0f)
         {
             answeringElapsed += Time.deltaTime;
@@ -104,6 +110,7 @@ public class Phone : InteractableHandler, IPawnable
         CountdownTimer.Instance.TickMultiplier = GameManager.Instance.GameConfig.ringEffectMultiplier;
 
         if (ringingVisual) ringingVisual.SetActive(true);
+        PlayRingSound();
         OnRingStart?.Invoke();
     }
 
@@ -113,10 +120,26 @@ public class Phone : InteractableHandler, IPawnable
         CountdownTimer.Instance.TickMultiplier = 1f;
 
         if (ringingVisual) ringingVisual.SetActive(false);
+        StopRingSound();
         AnnoyanceManager.Instance?.End("phone");
 
         ScheduleNextRing();
         OnRingEnd?.Invoke();
+    }
+
+    private void PlayRingSound()
+    {
+        if (audioSource == null || ringSound == null) return;
+
+        audioSource.clip = ringSound;
+        audioSource.loop = true;
+        audioSource.Play();
+    }
+
+    private void StopRingSound()
+    {
+        if (audioSource == null) return;
+        audioSource.Stop();
     }
 
     protected override void OnClicked(Vector2 worldPos)
