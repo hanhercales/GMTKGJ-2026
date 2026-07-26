@@ -9,14 +9,22 @@ public abstract class TaskBase : MonoBehaviour
     [SerializeField] private int moneyReward = 5;
 
     public bool IsCompleted { get;  private set; }
+    protected virtual bool ResetAfterComplete => false;
 
     protected void CompleteTask()
     {
         if(IsCompleted) return;
         IsCompleted = true;
 
-        MoneyService.Instance.Add(moneyReward, "task");
+        ApplyReward();
         OnTaskCompleted();
+        
+        if (ResetAfterComplete) IsCompleted = false;
+    }
+    
+    protected virtual void ApplyReward()
+    {
+        MoneyService.Instance.Add(moneyReward, "task");
     }
 
     protected virtual void OnTaskCompleted() { }
