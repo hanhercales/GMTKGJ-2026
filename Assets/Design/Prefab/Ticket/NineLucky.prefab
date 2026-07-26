@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeskObjectFocus
   focusedPosition: {x: 0, y: 0, z: 0}
-  focusedScale: {x: 10, y: 10, z: 10}
+  focusedScale: {x: 6, y: 6, z: 6}
   focusedSortingOrder: 100
   componentsToEnableOnFocus:
   - {fileID: 6577051263929670}
@@ -188,6 +188,7 @@ MonoBehaviour:
   - {fileID: 5829690973621985392}
   - {fileID: 4993518348437145081}
   - {fileID: 1438586966770632305}
+  gameObjectToEnableOnFocus: {fileID: 0}
 --- !u!114 &6577051263929670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,12 +201,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33a1b1530546d664ba5b17ab6d54638d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScratchTicket
-  cost: 80
-  scratchTime: 3
+  cost: 50
+  scratchTime: 8
   windows:
   - {fileID: 5080634347567458131}
   - {fileID: 8161507144290327252}
   - {fileID: 1330081104244704499}
+  - {fileID: 2697517880109795549}
+  - {fileID: 2385035826417147864}
+  - {fileID: 1172885633183736343}
+  - {fileID: 5829690973621985392}
+  - {fileID: 4993518348437145081}
+  - {fileID: 1438586966770632305}
   baseReward: 40
   symbolPool:
   - {fileID: -991425494, guid: d386967dad74a9f4492dac04659e991a, type: 3}

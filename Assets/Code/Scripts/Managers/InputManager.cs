@@ -45,7 +45,15 @@ public class InputManager : MonoBehaviour
     private void Update()
     {
         if(currentTarget != null)
+        {
             currentTarget.OnDragUpdate(GetPointerWorldPos());
+            
+            if (Mouse.current != null && !Mouse.current.leftButton.isPressed)
+            {
+                currentTarget.OnDragEnd(GetPointerWorldPos());
+                currentTarget = null;
+            }
+        }
 
         UpdateMouseSpeed();
     }

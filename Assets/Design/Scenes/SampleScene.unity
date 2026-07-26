@@ -1051,7 +1051,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   config: {fileID: 11400000, guid: 7ea21df957282fd4c81d0d031ab47a59, type: 2}
-  winScreen: {fileID: 2007621660}
+  winScreen: {fileID: 1969452615}
   loseScreen: {fileID: 194931035}
 --- !u!1 &435571981
 GameObject:
@@ -2258,8 +2258,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -400}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 0, y: -216}
+  m_SizeDelta: {x: 80, y: 16}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &840618187
 MonoBehaviour:
@@ -4443,11 +4443,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5544456281335042297, guid: c076de2c3c3500144a017b91e502d6a5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.9334054
+      value: -7.77
       objectReference: {fileID: 0}
     - target: {fileID: 5544456281335042297, guid: c076de2c3c3500144a017b91e502d6a5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5229777
+      value: 0.83
       objectReference: {fileID: 0}
     - target: {fileID: 5544456281335042297, guid: c076de2c3c3500144a017b91e502d6a5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4480,6 +4480,10 @@ PrefabInstance:
     - target: {fileID: 5544456281335042297, guid: c076de2c3c3500144a017b91e502d6a5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7233227198944389363, guid: c076de2c3c3500144a017b91e502d6a5, type: 3}
+      propertyPath: spawnPoint.y
+      value: -0.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4520,7 +4524,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8452872453884296626, guid: ddff55568fce87444acb8c555a704d95, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.91
+      value: 3.36
       objectReference: {fileID: 0}
     - target: {fileID: 8452872453884296626, guid: ddff55568fce87444acb8c555a704d95, type: 3}
       propertyPath: m_LocalPosition.z

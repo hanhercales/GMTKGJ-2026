@@ -169,13 +169,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeskObjectFocus
   focusedPosition: {x: 0, y: 0, z: 0}
-  focusedScale: {x: 10, y: 10, z: 10}
+  focusedScale: {x: 6, y: 6, z: 6}
   focusedSortingOrder: 100
   componentsToEnableOnFocus:
   - {fileID: 2837167277586708568}
   - {fileID: 2234541514765411508}
   - {fileID: 5728245667236322531}
   - {fileID: 7850442266792466797}
+  gameObjectToEnableOnFocus: {fileID: 0}
 --- !u!114 &2837167277586708568
 MonoBehaviour:
   m_ObjectHideFlags: 0
