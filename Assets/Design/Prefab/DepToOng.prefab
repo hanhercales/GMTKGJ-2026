@@ -179,6 +179,7 @@ MonoBehaviour:
   targetTag: Target
   settleVelocityThreshold: 0.05
   settleGraceTime: 0.15
+  pawnValue: 40
 --- !u!114 &1048298482361470460
 MonoBehaviour:
   m_ObjectHideFlags: 0

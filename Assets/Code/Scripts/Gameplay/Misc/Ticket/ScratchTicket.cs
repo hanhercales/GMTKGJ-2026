@@ -119,6 +119,8 @@ public class ScratchTicket : MonoBehaviour
     {
         payoutText = payoutTextRef;
         cashOutButton = cashOutButtonRef;
+        
+        cashOutButton.onClick.RemoveAllListeners();
 
         cashOutButton.onClick.AddListener(HandleCashOutClicked);
         UpdatePayoutDisplay();

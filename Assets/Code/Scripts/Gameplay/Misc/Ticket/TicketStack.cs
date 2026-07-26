@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 [RequireComponent(typeof(PointerReceiver))]
 [RequireComponent(typeof(Collider2D))]
-public class TicketStack : MonoBehaviour
+public class TicketStack : MonoBehaviour, IPawnable
 {
     [SerializeField] private ScratchTicket ticketPrefab;
     [SerializeField] private Vector2 spawnRangeMin = new Vector2(-4f, -3f);
@@ -12,6 +12,11 @@ public class TicketStack : MonoBehaviour
     [SerializeField] private TextMeshProUGUI payoutText;
     [SerializeField] private Button cashOutButton;
     [SerializeField] private GameObject[] GameObjectsToEnableOnFocus;
+    
+    [Header("Pawn")]
+    [SerializeField] private int pawnValue = 20;
+    
+    public int PawnValue => pawnValue;
     
     private PointerReceiver receiver;
     

@@ -3,9 +3,14 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(PointerReceiver))]
-public class ClickTask : TaskBase
+public class ClickTask : TaskBase, IPawnable
 {
     [Header("Settings")] [SerializeField] private int requiredClicks = 1;
+    
+    [Header("Pawn")]
+    [SerializeField] private int pawnValue = 20;
+    
+    public int PawnValue => pawnValue;
     
     private int currentClicks = 0;
     private PointerReceiver receiver;

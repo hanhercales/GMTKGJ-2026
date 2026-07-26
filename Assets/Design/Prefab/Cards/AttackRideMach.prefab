@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7746418904105881557}
   - component: {fileID: 3321384544281111275}
   - component: {fileID: 3009393860519642511}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AttackRideMach
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -167,6 +167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardDrop
   spriteRenderer: {fileID: 749525679263527327}
   clickedSprite: {fileID: -1263880189, guid: 366aafacd41634b43a3b6e20d669af43, type: 3}
+  pawnValue: 5
 --- !u!114 &3009393860519642511
 MonoBehaviour:
   m_ObjectHideFlags: 0

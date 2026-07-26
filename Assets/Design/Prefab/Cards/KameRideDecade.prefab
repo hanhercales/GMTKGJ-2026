@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7288126212342467743}
   - component: {fileID: 4720331059970689704}
   - component: {fileID: -4638559263005310005}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: KameRideDecade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -167,6 +167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardDrop
   spriteRenderer: {fileID: 4005546609417197385}
   clickedSprite: {fileID: -324519718, guid: 366aafacd41634b43a3b6e20d669af43, type: 3}
+  pawnValue: 5
 --- !u!114 &-4638559263005310005
 MonoBehaviour:
   m_ObjectHideFlags: 0

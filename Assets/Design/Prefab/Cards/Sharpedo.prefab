@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 927832699356465992}
   - component: {fileID: 6763719598429252910}
   - component: {fileID: 1603417702040472172}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sharpedo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -167,6 +167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardDrop
   spriteRenderer: {fileID: 3208898581316628198}
   clickedSprite: {fileID: -233913850, guid: 366aafacd41634b43a3b6e20d669af43, type: 3}
+  pawnValue: 5
 --- !u!114 &1603417702040472172
 MonoBehaviour:
   m_ObjectHideFlags: 0

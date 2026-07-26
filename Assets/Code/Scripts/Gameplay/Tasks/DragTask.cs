@@ -2,13 +2,22 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(PointerReceiver))]
-public class DragTask : TaskBase
+public class DragTask : TaskBase, IPawnable
 {
     [Header("Settings")] 
     [SerializeField] private Transform handle;
     [SerializeField] private Vector2 dragAxis = Vector2.down;
     [SerializeField] private float requiredDistance = 2f;
     [SerializeField] private bool reset = true;
+    
+    [Header("Spawn On Complete")]
+    [SerializeField] private GameObject spawnPrefab;
+    [SerializeField] private Transform spawnPoint;
+    
+    [Header("Pawn")]
+    [SerializeField] private int pawnValue = 20;
+    
+    public int PawnValue => pawnValue;
     
     private PointerReceiver receiver;
     private Vector3 startPos;
@@ -76,6 +85,10 @@ public class DragTask : TaskBase
 
     protected override void OnTaskCompleted()
     {
-        
+        if (spawnPrefab != null)
+        {
+            Vector3 pos = spawnPoint != null ? spawnPoint.position : transform.position;
+            Instantiate(spawnPrefab, pos, Quaternion.identity);
+        }
     }
 }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1358527813509551672}
   - component: {fileID: 3862245701101957345}
   - component: {fileID: 5243290215434076125}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TimeScarab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -167,6 +167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardDrop
   spriteRenderer: {fileID: 3620480675710506263}
   clickedSprite: {fileID: 21300000, guid: 81c3448948cb79f4fa468f3d1da88ccf, type: 3}
+  pawnValue: 5
 --- !u!114 &5243290215434076125
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6651135301405481044}
   - component: {fileID: 1818010695411647404}
   - component: {fileID: 4775783506130322695}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BEWDragon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -167,6 +167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardDrop
   spriteRenderer: {fileID: 7630555328547552029}
   clickedSprite: {fileID: -6555575649291838755, guid: 366aafacd41634b43a3b6e20d669af43, type: 3}
+  pawnValue: 5
 --- !u!114 &4775783506130322695
 MonoBehaviour:
   m_ObjectHideFlags: 0

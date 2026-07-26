@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7552319715725002308}
   - component: {fileID: 477616200328161419}
   - component: {fileID: 8837790869888805016}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: NiggaMagician
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -167,6 +167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardDrop
   spriteRenderer: {fileID: 8810186230643549397}
   clickedSprite: {fileID: -1793797828, guid: 366aafacd41634b43a3b6e20d669af43, type: 3}
+  pawnValue: 5
 --- !u!114 &8837790869888805016
 MonoBehaviour:
   m_ObjectHideFlags: 0

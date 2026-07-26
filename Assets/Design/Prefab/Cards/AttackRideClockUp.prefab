@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1198922413909245945}
   - component: {fileID: 2470832448618938501}
   - component: {fileID: 6103715856385758179}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AttackRideClockUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -167,6 +167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardDrop
   spriteRenderer: {fileID: 6243048564893641177}
   clickedSprite: {fileID: 423033766, guid: 366aafacd41634b43a3b6e20d669af43, type: 3}
+  pawnValue: 5
 --- !u!114 &6103715856385758179
 MonoBehaviour:
   m_ObjectHideFlags: 0
