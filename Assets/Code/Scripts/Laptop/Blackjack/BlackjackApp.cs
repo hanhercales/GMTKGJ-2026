@@ -27,26 +27,45 @@ public class BlackjackApp : LaptopApp
     [SerializeField] private TMP_Text doubleButtonLabel;
     [SerializeField] private TMP_Text playerValueLabel;
     [SerializeField] private TMP_Text dealerValueLabel;
-    [SerializeField] private TMP_Text resultLabel;
     [SerializeField] private TMP_Text anteLabel;
-    [SerializeField] private TMP_Text payoutLabel;
     [SerializeField] private TMP_Text spentLabel;
     [SerializeField] private TMP_Text receivedLabel;
     [SerializeField] private CardRowView playerRow;
     [SerializeField] private CardRowView dealerRow;
 
+    // Simple "WIN" badges - just shown/hidden on whichever side won, no text
+    // changes. All the actual wording (payout amount, push, bust, the
+    // "NOT ENOUGH TIME" warning) goes through winningOutcomeLabel instead,
+    // which shows the static payout table the rest of the time.
+    [SerializeField] private GameObject playerWinLabel;
+    [SerializeField] private GameObject dealerWinLabel;
+    [SerializeField] private TMP_Text winningOutcomeLabel;
+
     private BlackjackGame _game;
     private bool _resolving;
     private float _totalSpent;
     private int _totalReceived;
+    private string _payoutInfoText;
 
     // Disabled by the "Connection Lost" debuff. Does NOT disable mining.
     public bool Banned { get; private set; }
 
-    private void Start()
+    private void Start() => EnsureInitialized();
+
+    /// <summary>
+    /// Can't rely on Start() alone: LaptopController.Start() deactivates every
+    /// app on scene load, and if that happens before Unity gets to this
+    /// object's own Start() in the frame's Start-phase, Unity skips it and
+    /// defers it until the app is reactivated - but OnAppOpened() (called the
+    /// instant RequestOpen reactivates it) runs synchronously before that
+    /// deferred Start() gets a chance to fire, so _game would still be null.
+    /// Called from both Start() and OnAppOpened() and guarded so it only
+    /// runs once, whichever gets there first.
+    /// </summary>
+    private void EnsureInitialized()
     {
-        // Built in Start, not Awake: rng.Random is set in RngService.Awake(),
-        // and Unity doesn't guarantee Awake() order across components.
+        if (_game != null) return;
+
         _game = new BlackjackGame(rng.Random);
 
         dealButton.onClick.AddListener(OnDeal);
@@ -55,10 +74,11 @@ public class BlackjackApp : LaptopApp
         doubleButton.onClick.AddListener(OnDouble);
 
         // Static for the session - ante/payouts don't change mid-run.
-        payoutLabel.text = $"win ${config.blackjackWinPayout} · push ${config.blackjackPushPayout} · bj ${config.blackjackNaturalPayout}";
+        _payoutInfoText = $"win ${config.blackjackWinPayout} · push ${config.blackjackPushPayout} · bj ${config.blackjackNaturalPayout}";
+        winningOutcomeLabel.text = _payoutInfoText;
         doubleButtonLabel.text = $"DOUBLE -{config.blackjackAnte:0}s";
 
-        Refresh();
+        HideWinBadges();
     }
 
     // ---------- Safety rails ----------
@@ -85,6 +105,8 @@ public class BlackjackApp : LaptopApp
 
         clock.Spend(config.blackjackAnte, "blackjack ante");
         _totalSpent += config.blackjackAnte;
+        HideWinBadges();
+        winningOutcomeLabel.text = _payoutInfoText; // clear any lingering flash/warning
         _game.Deal();
 
         if (_game.State == HandState.Resolved)
@@ -152,12 +174,18 @@ public class BlackjackApp : LaptopApp
             _totalReceived += payout;
         }
 
-        resultLabel.text = payout > 0
-            ? $"{_game.ResultText}  +${payout}"
-            : _game.ResultText;
+        winningOutcomeLabel.text = payout > 0 ? $"{_game.ResultText}  +${payout}" : _game.ResultText;
+
+        // Push still pays out (a partial refund), so it reads as a player-side
+        // outcome same as a win - only an outright dealer win or player bust
+        // shows on the dealer's side.
+        bool dealerSide = _game.Result is Outcome.DealerWin or Outcome.PlayerBust;
+        playerWinLabel.SetActive(!dealerSide);
+        dealerWinLabel.SetActive(dealerSide);
 
         yield return new WaitForSeconds(config.blackjackResultDelay);
 
+        winningOutcomeLabel.text = _payoutInfoText; // back to the payout table, WIN badge stays until next deal
         _game.Reset();
         _resolving = false;
         Refresh();
@@ -179,10 +207,16 @@ public class BlackjackApp : LaptopApp
 
     // ---------- App lifecycle ----------
 
-    public override void OnAppOpened() => Refresh();
+    public override void OnAppOpened()
+    {
+        EnsureInitialized();
+        Refresh();
+    }
 
     public override void OnAppClosed()
     {
+        if (_game == null) return; // never opened, nothing to forfeit
+
         // Closing the app mid-hand FORFEITS the ante and the hand.
         // Intentional: the player already paid, and letting them park a
         // live hand while they mine would break the lockout.
@@ -228,12 +262,14 @@ public class BlackjackApp : LaptopApp
         dealerValueLabel.text = _game.DealerHand.Count == 0
             ? ""
             : "DEALER " + (_game.DealerHoleHidden ? _game.DealerUpValue + " + ?" : _game.DealerValue.ToString());
-
-        if (idle) resultLabel.text = "";
     }
 
-    private void Flash(string message)
+    private void HideWinBadges()
     {
-        resultLabel.text = message;
+        playerWinLabel.SetActive(false);
+        dealerWinLabel.SetActive(false);
     }
+
+    /// <summary>Flashes a warning where the payout table normally sits.</summary>
+    private void Flash(string message) => winningOutcomeLabel.text = message;
 }

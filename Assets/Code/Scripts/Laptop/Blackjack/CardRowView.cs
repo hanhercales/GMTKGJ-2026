@@ -6,6 +6,7 @@ using Overtime.Blackjack;
 public class CardRowView : MonoBehaviour
 {
     [SerializeField] private CardSlotView[] cardSlots;
+    [SerializeField] private CardDeckConfig deck;
 
     public void Render(IReadOnlyList<Card> hand, int hideIndex)
     {
@@ -20,7 +21,7 @@ public class CardRowView : MonoBehaviour
             if (i == hideIndex)
                 cardSlots[i].ShowFaceDown();
             else
-                cardSlots[i].ShowCard(hand[i]);
+                cardSlots[i].ShowCard(hand[i], deck != null ? deck.GetSprite(hand[i]) : null);
         }
     }
 }
