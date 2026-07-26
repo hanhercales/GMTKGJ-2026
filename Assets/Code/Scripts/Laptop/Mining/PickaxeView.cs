@@ -1,43 +1,98 @@
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 /// <summary>
-/// Drag the pickaxe icon onto the ore block to hit it. Releasing over the
-/// block fires Hit; releasing anywhere else is just a missed swing - the
-/// pickaxe always snaps back to its resting spot, no penalty either way.
+/// Pick up the pickaxe icon and drag it into the ore block, then back out -
+/// that in-and-out cycle is what fires a Hit, like an actual swing rather
+/// than just parking the pickaxe on top of the block. You can repeat this
+/// as many times as you like in one hold. Releasing always snaps the pickaxe
+/// back to its resting spot; releasing while still inside the block also
+/// counts as a hit (letting go force-detaches it, same as pulling out).
+///
+/// Uses PointerDown/Up rather than Unity's Begin/EndDrag, which only fire
+/// after the pointer clears a few pixels of movement - that dead zone made
+/// the pickaxe feel like it wouldn't "hold." PointerDown fires the instant
+/// the mouse button goes down instead.
+///
+/// Tracks via world position (Rect.position), not anchoredPosition - the
+/// latter is only meaningful relative to this object's own anchor, and if
+/// that anchor ever moves in the Inspector, anchoredPosition math silently
+/// breaks (it did once already). World position works regardless of anchor.
+///
+/// Must sit on the object with the visible, raycastable Image (the pickaxe
+/// sprite itself) - not a parent container with no Graphic, or the
+/// EventSystem never routes pointer events here at all.
 /// </summary>
-public class PickaxeView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+[RequireComponent(typeof(Image))]
+public class PickaxeView : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField] private RectTransform oreTarget;
+    [SerializeField] private float hitCooldown = 0.7f;
 
     private RectTransform _rect;
-    private Vector2 _homePosition;
+    private RectTransform _parentRect;
+    private Vector3 _homePosition;
+    private Camera _eventCamera;
+    private bool _held;
+    private bool _wasOverlapping;
+    private float _lastHitTime = -Mathf.Infinity;
 
     public event Action Hit;
 
     private void Awake()
     {
         _rect = (RectTransform)transform;
-        _homePosition = _rect.anchoredPosition;
+        _parentRect = (RectTransform)_rect.parent;
+        _homePosition = _rect.position;
+
+        if (oreTarget == null)
+            Debug.LogWarning($"{nameof(PickaxeView)} on {name} has no Ore Target assigned - every swing will miss.", this);
     }
 
-    public void OnBeginDrag(PointerEventData eventData) { }
-
-    public void OnDrag(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData)
     {
-        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                (RectTransform)_rect.parent, eventData.position, eventData.pressEventCamera, out var localPoint))
-        {
-            _rect.anchoredPosition = localPoint;
-        }
+        _held = true;
+        _wasOverlapping = false;
+        _eventCamera = eventData.pressEventCamera;
     }
 
-    public void OnEndDrag(PointerEventData eventData)
+    private void Update()
     {
-        if (RectTransformUtility.RectangleContainsScreenPoint(oreTarget, eventData.position, eventData.pressEventCamera))
-            Hit?.Invoke();
+        if (!_held || Mouse.current == null) return;
 
-        _rect.anchoredPosition = _homePosition;
+        Vector2 screenPos = Mouse.current.position.ReadValue();
+
+        if (RectTransformUtility.ScreenPointToWorldPointInRectangle(_parentRect, screenPos, _eventCamera, out var worldPoint))
+            _rect.position = worldPoint;
+
+        bool isOverlapping = RectTransformUtility.RectangleContainsScreenPoint(oreTarget, screenPos, _eventCamera);
+        if (_wasOverlapping && !isOverlapping)
+            TryHit(); // dragged in, then back out - one completed swing
+        _wasOverlapping = isOverlapping;
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        if (!_held) return;
+        _held = false;
+
+        Vector2 screenPos = Mouse.current.position.ReadValue();
+        if (RectTransformUtility.RectangleContainsScreenPoint(oreTarget, screenPos, _eventCamera))
+            TryHit(); // released mid-block - forced detach, still counts
+
+        _wasOverlapping = false;
+        _rect.position = _homePosition;
+    }
+
+    // Caps swing rate so jittering the pickaxe right at the block's edge
+    // can't fire hits faster than an actual swing would allow.
+    private void TryHit()
+    {
+        if (Time.time - _lastHitTime < hitCooldown) return;
+        _lastHitTime = Time.time;
+        Hit?.Invoke();
     }
 }

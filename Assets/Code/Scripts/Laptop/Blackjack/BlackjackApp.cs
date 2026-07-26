@@ -24,15 +24,21 @@ public class BlackjackApp : LaptopApp
     [SerializeField] private Button hitButton;
     [SerializeField] private Button standButton;
     [SerializeField] private Button doubleButton;
+    [SerializeField] private TMP_Text doubleButtonLabel;
     [SerializeField] private TMP_Text playerValueLabel;
     [SerializeField] private TMP_Text dealerValueLabel;
     [SerializeField] private TMP_Text resultLabel;
     [SerializeField] private TMP_Text anteLabel;
+    [SerializeField] private TMP_Text payoutLabel;
+    [SerializeField] private TMP_Text spentLabel;
+    [SerializeField] private TMP_Text receivedLabel;
     [SerializeField] private CardRowView playerRow;
     [SerializeField] private CardRowView dealerRow;
 
     private BlackjackGame _game;
     private bool _resolving;
+    private float _totalSpent;
+    private int _totalReceived;
 
     // Disabled by the "Connection Lost" debuff. Does NOT disable mining.
     public bool Banned { get; private set; }
@@ -47,6 +53,10 @@ public class BlackjackApp : LaptopApp
         hitButton.onClick.AddListener(OnHit);
         standButton.onClick.AddListener(OnStand);
         doubleButton.onClick.AddListener(OnDouble);
+
+        // Static for the session - ante/payouts don't change mid-run.
+        payoutLabel.text = $"win ${config.blackjackWinPayout} · push ${config.blackjackPushPayout} · bj ${config.blackjackNaturalPayout}";
+        doubleButtonLabel.text = $"DOUBLE -{config.blackjackAnte:0}s";
 
         Refresh();
     }
@@ -74,6 +84,7 @@ public class BlackjackApp : LaptopApp
         }
 
         clock.Spend(config.blackjackAnte, "blackjack ante");
+        _totalSpent += config.blackjackAnte;
         _game.Deal();
 
         if (_game.State == HandState.Resolved)
@@ -113,6 +124,7 @@ public class BlackjackApp : LaptopApp
         }
 
         clock.Spend(config.blackjackAnte, "blackjack double");
+        _totalSpent += config.blackjackAnte;
         _game.DoubleDown();
         StartCoroutine(Resolve());
         Refresh();
@@ -135,7 +147,10 @@ public class BlackjackApp : LaptopApp
             config.blackjackNaturalPayout);
 
         if (payout > 0)
+        {
             money.Add(payout, "blackjack");
+            _totalReceived += payout;
+        }
 
         resultLabel.text = payout > 0
             ? $"{_game.ResultText}  +${payout}"
@@ -186,6 +201,11 @@ public class BlackjackApp : LaptopApp
         bool idle = _game.State == HandState.Idle && !_resolving;
         bool playing = _game.State == HandState.PlayerTurn && !_resolving;
 
+        dealButton.gameObject.SetActive(idle);
+        hitButton.gameObject.SetActive(playing);
+        standButton.gameObject.SetActive(playing);
+        doubleButton.gameObject.SetActive(playing);
+
         dealButton.interactable   = idle && Available && CanAffordAnte;
         hitButton.interactable    = playing && _game.CanHit;
         standButton.interactable  = playing;
@@ -193,18 +213,21 @@ public class BlackjackApp : LaptopApp
 
         anteLabel.text = Banned
             ? "CONNECTION LOST"
-            : $"ANTE: {config.blackjackAnte}s";
+            : $"ANTE {config.blackjackAnte:0}s";
+
+        spentLabel.text = $"Spent {_totalSpent:0}s";
+        receivedLabel.text = $"Received ${_totalReceived}";
 
         playerRow.Render(_game.PlayerHand, hideIndex: -1);
         dealerRow.Render(_game.DealerHand, hideIndex: _game.DealerHoleHidden ? 1 : -1);
 
         playerValueLabel.text = _game.PlayerHand.Count == 0
             ? ""
-            : (BlackjackGame.IsSoft(_game.PlayerHand) ? "soft " : "") + _game.PlayerValue;
+            : "YOU " + (BlackjackGame.IsSoft(_game.PlayerHand) ? "soft " : "") + _game.PlayerValue;
 
         dealerValueLabel.text = _game.DealerHand.Count == 0
             ? ""
-            : (_game.DealerHoleHidden ? _game.DealerUpValue + " + ?" : _game.DealerValue.ToString());
+            : "DEALER " + (_game.DealerHoleHidden ? _game.DealerUpValue + " + ?" : _game.DealerValue.ToString());
 
         if (idle) resultLabel.text = "";
     }

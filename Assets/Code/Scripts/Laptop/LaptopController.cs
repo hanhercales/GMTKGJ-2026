@@ -48,6 +48,30 @@ public class LaptopController : MonoBehaviour
         if (app != null) RequestOpen(app);
     }
 
+    /// <summary>Closes whichever app is open and drops back to the home screen (Apps grid). Free - unlike switching between apps, going home isn't a paid action.</summary>
+    public void CloseCurrentApp()
+    {
+        if (_current == null || _switching) return;
+
+        _current.OnAppClosed();
+        _current.gameObject.SetActive(false);
+        _current = null;
+    }
+
+    /// <summary>
+    /// Closes the whole laptop, back to the desk. Apps are siblings of the
+    /// Laptop panel, not children of it (see Start()), so hiding this
+    /// GameObject alone would leave an open app floating on screen with no
+    /// laptop shell around it - close the current app first so its own
+    /// OnAppClosed cleanup (e.g. forfeiting unbanked mining/blackjack money)
+    /// still runs.
+    /// </summary>
+    public void CloseLaptop()
+    {
+        CloseCurrentApp();
+        gameObject.SetActive(false);
+    }
+
     /// <summary>
     /// App switching costs real time (config.laptopSwitchTime). Deliberate:
     /// hopping between mining and blackjack should have a price.

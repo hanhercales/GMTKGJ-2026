@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7309037992796495318}
   - component: {fileID: 789515745824784260}
   - component: {fileID: 6111604963062639028}
+  - component: {fileID: 6003684068881812562}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -25,13 +26,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 498429357802370085}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 466779034895269231}
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: -48, y: 0}
@@ -75,6 +76,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6003684068881812562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498429357802370085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1fff51fadd442546a66825f44d7d9cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PickaxeView
+  oreTarget: {fileID: 5105098144684266008}
+  hitCooldown: 0.5
 --- !u!1 &563692272397273461
 GameObject:
   m_ObjectHideFlags: 0
@@ -107,10 +122,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1722716366864536050}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 121.2, y: -3.5}
+  m_SizeDelta: {x: 18.4, y: 7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &119739296094426080
 CanvasRenderer:
@@ -456,10 +471,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1722716366864536050}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 165.99998, y: -3.5}
+  m_SizeDelta: {x: 18.4, y: 7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7361681890064597188
 CanvasRenderer:
@@ -511,6 +526,7 @@ GameObject:
   - component: {fileID: 1260274126039748899}
   - component: {fileID: 903243254688826181}
   - component: {fileID: 2836401579553742836}
+  - component: {fileID: 7682507510425275130}
   m_Layer: 5
   m_Name: CloseButton
   m_TagString: Untagged
@@ -595,7 +611,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 0
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -620,6 +636,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7682507510425275130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1708255104762529505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05adcb07152937249bc26cadb430c5df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CloseAppButton
+  controller: {fileID: 0}
 --- !u!1 &1831013613039703024
 GameObject:
   m_ObjectHideFlags: 0
@@ -652,10 +681,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1722716366864536050}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 143.59999, y: -3.5}
+  m_SizeDelta: {x: 18.4, y: 7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7007468169996821928
 CanvasRenderer:
@@ -877,10 +906,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1722716366864536050}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 54, y: -3.5}
+  m_SizeDelta: {x: 18.4, y: 7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7066238371164630548
 CanvasRenderer:
@@ -952,10 +981,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1722716366864536050}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 9.2, y: -3.5}
+  m_SizeDelta: {x: 18.4, y: 7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3051126300700254430
 CanvasRenderer:
@@ -1028,9 +1057,9 @@ RectTransform:
   - {fileID: 1577016303348560791}
   m_Father: {fileID: 1847330404381725867}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 96, y: -15}
   m_SizeDelta: {x: 200, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3358489868135772352
@@ -1103,10 +1132,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1722716366864536050}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 31.599998, y: -3.5}
+  m_SizeDelta: {x: 18.4, y: 7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8864680870402218616
 CanvasRenderer:
@@ -1165,7 +1194,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7347546468636014710
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1253,8 +1282,8 @@ MonoBehaviour:
   blocks: {fileID: 11400000, guid: 2ed36967df0b66c44a166c7c339d386b, type: 2}
   money: {fileID: 0}
   rng: {fileID: 0}
-  pickaxe: {fileID: 3194718823109185550}
-  oreImage: {fileID: 7238526142364020554}
+  pickaxe: {fileID: 6003684068881812562}
+  oreImage: {fileID: 3835644602194894684}
   statusNodes:
   - {fileID: 3926879661567077264}
   - {fileID: 1201346464082657187}
@@ -1302,10 +1331,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1722716366864536050}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 210.79997, y: -3.5}
+  m_SizeDelta: {x: 18.4, y: 7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3606812417885571884
 CanvasRenderer:
@@ -1377,10 +1406,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1722716366864536050}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 98.799995, y: -3.5}
+  m_SizeDelta: {x: 18.4, y: 7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7148680078426554451
 CanvasRenderer:
@@ -1527,10 +1556,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1722716366864536050}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 76.399994, y: -3.5}
+  m_SizeDelta: {x: 18.4, y: 7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7412064686295555165
 CanvasRenderer:
@@ -1603,9 +1632,9 @@ RectTransform:
   - {fileID: 3548935663323619709}
   m_Father: {fileID: 1847330404381725867}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 298, y: -15}
   m_SizeDelta: {x: 200, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1221334449955059272
@@ -1927,10 +1956,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1722716366864536050}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 188.39998, y: -3.5}
+  m_SizeDelta: {x: 18.4, y: 7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5273921128795190478
 CanvasRenderer:
@@ -2161,7 +2190,6 @@ GameObject:
   - component: {fileID: 466779034895269231}
   - component: {fileID: 1258510864369443044}
   - component: {fileID: 5526775255989887852}
-  - component: {fileID: 3194718823109185550}
   m_Layer: 5
   m_Name: Pickaxe
   m_TagString: Untagged
@@ -2184,9 +2212,9 @@ RectTransform:
   - {fileID: 7309037992796495318}
   m_Father: {fileID: 4249940791446481883}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 400, y: 0}
   m_SizeDelta: {x: 400, y: 250}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &1258510864369443044
@@ -2227,19 +2255,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3194718823109185550
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8640354605064139045}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1fff51fadd442546a66825f44d7d9cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PickaxeView
-  oreTarget: {fileID: 0}
 --- !u!1 &8729286798478176467
 GameObject:
   m_ObjectHideFlags: 0

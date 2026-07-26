@@ -48,7 +48,7 @@ public class MiningApp : LaptopApp
     private void StartVein()
     {
         int length = rng.Random.Next(config.veinLengthMin, config.veinLengthMax + 1);
-        length = Mathf.Min(length, blocks.blocks.Length);
+        length = Mathf.Min(length, blocks.blocks.Length, statusNodes.Length);
 
         _vein = new List<BlockTypeDefinition>(length);
         _totalVeinHp = 0;
@@ -63,6 +63,11 @@ public class MiningApp : LaptopApp
         _damageDealt = 0;
         _unconfirmed = 0;
 
+        // Only show as many nodes as this vein actually has, so a length-6
+        // vein reads as "mining to 6," not as a 10-node bar stuck at 60%.
+        for (int i = 0; i < statusNodes.Length; i++)
+            statusNodes[i].gameObject.SetActive(i < length);
+
         RefreshOre();
         RefreshProgress();
         RefreshLabels();
@@ -70,6 +75,10 @@ public class MiningApp : LaptopApp
 
     private void OnHit()
     {
+        // A hit landing during the veinRespawn delay (vein finished, next one
+        // not generated yet) would otherwise index past the old vein's end.
+        if (_vein == null || _blockIndex >= _vein.Count) return;
+
         var block = _vein[_blockIndex];
         int damage = Mathf.Min(block.pickaxeDamage, _blockHp);
 
@@ -116,9 +125,9 @@ public class MiningApp : LaptopApp
     private void RefreshProgress()
     {
         float fraction = _totalVeinHp == 0 ? 0f : (float)_damageDealt / _totalVeinHp;
-        int filled = Mathf.RoundToInt(fraction * statusNodes.Length);
+        int filled = Mathf.RoundToInt(fraction * _vein.Count);
 
-        for (int i = 0; i < statusNodes.Length; i++)
+        for (int i = 0; i < _vein.Count; i++)
             statusNodes[i].color = i < filled ? filledColor : unfilledColor;
     }
 
