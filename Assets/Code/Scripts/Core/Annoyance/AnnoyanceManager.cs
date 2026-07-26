@@ -10,8 +10,6 @@ public class AnnoyanceManager : MonoBehaviour
 {
     public static AnnoyanceManager Instance { get; private set; }
 
-    [SerializeField] private GameConfig config;
-
     private bool isBusy;
     private float lastEventEndTime = -999f;
 
@@ -21,7 +19,7 @@ public class AnnoyanceManager : MonoBehaviour
         Instance = this;
     }
 
-    public bool CanStart => !isBusy && Time.time - lastEventEndTime >= config.annoyanceMinGap;
+    public bool CanStart => !isBusy && Time.time - lastEventEndTime >= GameManager.Instance.GameConfig.annoyanceMinGap;
 
     /// <summary>Call before starting an annoyance. Returns false if another is active or the gap hasn't elapsed - caller should retry shortly rather than drop the event.</summary>
     public bool TryBegin(string reason)

@@ -11,11 +11,6 @@ public class ITRSService : MonoBehaviour
 {
     public static ITRSService Instance { get; private set; }
 
-    [SerializeField] private GameConfig config;
-    [SerializeField] private MoneyService money;
-    [SerializeField] private CountdownTimer clock;
-    [SerializeField] private AnnoyanceManager annoyance;
-
     /// <summary>A bill awaiting the player's Pay/Ignore decision - Taxes/Tax panel UI hooks here.</summary>
     public readonly struct Assessment
     {
@@ -56,11 +51,11 @@ public class ITRSService : MonoBehaviour
     {
         // Captured in Start, not Awake - MoneyService.Awake sets its starting Current
         // and Awake order across scripts isn't guaranteed (see HANDOFF.md §3).
-        lastKnownMoney = money.Current;
+        lastKnownMoney = MoneyService.Instance.Current;
     }
 
-    private void OnEnable() => money.OnMoneyChanged += HandleMoneyChanged;
-    private void OnDisable() => money.OnMoneyChanged -= HandleMoneyChanged;
+    private void OnEnable() => MoneyService.Instance.OnMoneyChanged += HandleMoneyChanged;
+    private void OnDisable() => MoneyService.Instance.OnMoneyChanged -= HandleMoneyChanged;
 
     private void HandleMoneyChanged(int current, string reason)
     {
@@ -71,10 +66,10 @@ public class ITRSService : MonoBehaviour
 
     private void Update()
     {
-        if (!clock.IsRunning || clock.IsGameOver) return;
+        if (!CountdownTimer.Instance.IsRunning || CountdownTimer.Instance.IsGameOver) return;
 
         timer += Time.deltaTime;
-        if (timer >= config.billInterval)
+        if (timer >= GameManager.Instance.GameConfig.billInterval)
         {
             timer = 0f;
             TryIssueAssessment();
@@ -92,9 +87,9 @@ public class ITRSService : MonoBehaviour
 
         // Also covers "a notice is already pending" - AnnoyanceManager stays busy
         // until Pay/Ignore resolves it, so this naturally retries instead of piling up.
-        if (annoyance != null && !annoyance.TryBegin("itrs"))
+        if (AnnoyanceManager.Instance != null && !AnnoyanceManager.Instance.TryBegin("itrs"))
         {
-            timer = config.billInterval - 1f; // retry in ~1s rather than dropping the bill
+            timer = GameManager.Instance.GameConfig.billInterval - 1f; // retry in ~1s rather than dropping the bill
             return;
         }
 
@@ -106,9 +101,9 @@ public class ITRSService : MonoBehaviour
         int earned = earnedSinceLastBill;
         earnedSinceLastBill = 0;
 
-        int amountDue = Mathf.Max(config.billMinimum, Mathf.RoundToInt(earned * config.billRate));
+        int amountDue = Mathf.Max(GameManager.Instance.GameConfig.billMinimum, Mathf.RoundToInt(earned * GameManager.Instance.GameConfig.billRate));
 
-        CurrentAssessment = new Assessment(earned, config.billRate, config.billMinimum, amountDue, config.shortfallPenalty);
+        CurrentAssessment = new Assessment(earned, GameManager.Instance.GameConfig.billRate, GameManager.Instance.GameConfig.billMinimum, amountDue, GameManager.Instance.GameConfig.shortfallPenalty);
         HasPendingAssessment = true;
 
         OnAssessmentIssued?.Invoke(CurrentAssessment);
@@ -118,7 +113,7 @@ public class ITRSService : MonoBehaviour
     public bool Pay()
     {
         if (!HasPendingAssessment) return false;
-        if (!money.TrySpend(CurrentAssessment.amountDue, "ITRS bill")) return false;
+        if (!MoneyService.Instance.TrySpend(CurrentAssessment.amountDue, "ITRS bill")) return false;
 
         Resolve();
         return true;
@@ -129,14 +124,14 @@ public class ITRSService : MonoBehaviour
     {
         if (!HasPendingAssessment) return;
 
-        clock.Spend(CurrentAssessment.amountDue * CurrentAssessment.penaltyPerDollar, "ITRS shortfall");
+        CountdownTimer.Instance.Spend(CurrentAssessment.amountDue * CurrentAssessment.penaltyPerDollar, "ITRS shortfall");
         Resolve();
     }
 
     private void Resolve()
     {
         HasPendingAssessment = false;
-        annoyance?.End("itrs");
+        AnnoyanceManager.Instance?.End("itrs");
     }
 
     /// <summary>Tax Exemption buff - the next scheduled bill is skipped entirely.</summary>
