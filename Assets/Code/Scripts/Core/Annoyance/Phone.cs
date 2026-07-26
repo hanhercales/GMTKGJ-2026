@@ -13,10 +13,9 @@ public class Phone : InteractableHandler
 {
     public static Phone Instance { get; private set; }
 
-    [SerializeField] private GameConfig config;
-    [SerializeField] private CountdownTimer clock;
-    [SerializeField] private AnnoyanceManager annoyance;
     [SerializeField] private GameObject ringingVisual;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip ringSound;
 
     public bool IsRinging { get; private set; }
     public event Action OnRingStart;
@@ -37,12 +36,18 @@ public class Phone : InteractableHandler
         base.Awake();
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
+    }
 
+    private void Start()
+    {
+        // Not Awake: GameManager/RngService's own Awake isn't guaranteed to run first
+        // (see HANDOFF.md §3). Start() only runs after every object's Awake completes.
         ScheduleNextRing();
     }
 
     private void ScheduleNextRing()
     {
+        GameConfig config = GameManager.Instance.GameConfig;
         float min = config.ringIntervalMin;
         float max = config.ringIntervalMax;
         if (robocallsActive) { min *= 0.5f; max *= 0.5f; }
@@ -52,7 +57,7 @@ public class Phone : InteractableHandler
 
     private void Update()
     {
-        if (!clock.IsRunning || clock.IsGameOver) return;
+        if (!CountdownTimer.Instance.IsRunning || CountdownTimer.Instance.IsGameOver) return;
 
         if (silenced)
         {
@@ -77,12 +82,13 @@ public class Phone : InteractableHandler
 
         ringElapsed += Time.deltaTime;
 
+        GameConfig cfg = GameManager.Instance.GameConfig;
         if (answeringElapsed >= 0f)
         {
             answeringElapsed += Time.deltaTime;
-            if (answeringElapsed >= config.answerTime) StopRing();
+            if (answeringElapsed >= cfg.answerTime) StopRing();
         }
-        else if (ringElapsed >= config.maxRingDuration)
+        else if (ringElapsed >= cfg.maxRingDuration)
         {
             StopRing();
         }
@@ -90,7 +96,7 @@ public class Phone : InteractableHandler
 
     private void TryStartRing()
     {
-        if (annoyance != null && !annoyance.TryBegin("phone"))
+        if (AnnoyanceManager.Instance != null && !AnnoyanceManager.Instance.TryBegin("phone"))
         {
             nextRingTimer = 1f; // retry shortly rather than skipping this ring
             return;
@@ -99,22 +105,39 @@ public class Phone : InteractableHandler
         IsRinging = true;
         ringElapsed = 0f;
         answeringElapsed = -1f;
-        clock.TickMultiplier = config.ringEffectMultiplier;
+        CountdownTimer.Instance.TickMultiplier = GameManager.Instance.GameConfig.ringEffectMultiplier;
 
         if (ringingVisual) ringingVisual.SetActive(true);
+        PlayRingSound();
         OnRingStart?.Invoke();
     }
 
     private void StopRing()
     {
         IsRinging = false;
-        clock.TickMultiplier = 1f;
+        CountdownTimer.Instance.TickMultiplier = 1f;
 
         if (ringingVisual) ringingVisual.SetActive(false);
-        annoyance?.End("phone");
+        StopRingSound();
+        AnnoyanceManager.Instance?.End("phone");
 
         ScheduleNextRing();
         OnRingEnd?.Invoke();
+    }
+
+    private void PlayRingSound()
+    {
+        if (audioSource == null || ringSound == null) return;
+
+        audioSource.clip = ringSound;
+        audioSource.loop = true;
+        audioSource.Play();
+    }
+
+    private void StopRingSound()
+    {
+        if (audioSource == null) return;
+        audioSource.Stop();
     }
 
     protected override void OnClicked(Vector2 worldPos)

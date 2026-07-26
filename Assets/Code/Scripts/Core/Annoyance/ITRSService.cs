@@ -49,13 +49,17 @@ public class ITRSService : MonoBehaviour
 
     private void Start()
     {
-        // Captured in Start, not Awake - MoneyService.Awake sets its starting Current
-        // and Awake order across scripts isn't guaranteed (see HANDOFF.md §3).
+        // Not OnEnable: Awake order across scripts isn't guaranteed (see HANDOFF.md §3),
+        // so MoneyService.Instance can still be null there. Start() only runs after
+        // every object's Awake has completed, so the singleton is always ready here.
         lastKnownMoney = MoneyService.Instance.Current;
+        MoneyService.Instance.OnMoneyChanged += HandleMoneyChanged;
     }
 
-    private void OnEnable() => MoneyService.Instance.OnMoneyChanged += HandleMoneyChanged;
-    private void OnDisable() => MoneyService.Instance.OnMoneyChanged -= HandleMoneyChanged;
+    private void OnDestroy()
+    {
+        if (MoneyService.Instance != null) MoneyService.Instance.OnMoneyChanged -= HandleMoneyChanged;
+    }
 
     private void HandleMoneyChanged(int current, string reason)
     {

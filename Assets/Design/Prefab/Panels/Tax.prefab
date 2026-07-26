@@ -979,7 +979,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e58ffa2509671e4479fc5cdd187c1609, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tax
-  itrs: {fileID: 0}
   earnedValueText: {fileID: 908387449156021}
   rateValueText: {fileID: 7464171964550338498}
   minimumValueText: {fileID: 3768182245101022314}
@@ -987,6 +986,7 @@ MonoBehaviour:
   payButton: {fileID: 6878164392681275539}
   payButtonLabel: {fileID: 718337732390540784}
   ignoreButton: {fileID: 6857627026364885717}
+  closeButton: {fileID: 1401907316236176741}
 --- !u!1 &2757036039101808350
 GameObject:
   m_ObjectHideFlags: 0
@@ -2786,7 +2786,6 @@ GameObject:
   - component: {fileID: 2500958233000144105}
   - component: {fileID: 7502076866615353124}
   - component: {fileID: 1401907316236176741}
-  - component: {fileID: 4976304653959586957}
   m_Layer: 5
   m_Name: CloseButton
   m_TagString: Untagged
@@ -2896,20 +2895,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &4976304653959586957
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6352837831724676104}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05adcb07152937249bc26cadb430c5df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CloseAppButton
-  controller: {fileID: 0}
-  closeWholeLaptop: 0
 --- !u!1 &6957401622222923525
 GameObject:
   m_ObjectHideFlags: 0

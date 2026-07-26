@@ -195,3 +195,5 @@ MonoBehaviour:
   pawnableLayers:
     serializedVersion: 2
     m_Bits: 72
+  audioSource: {fileID: 0}
+  pawnSound: {fileID: 0}

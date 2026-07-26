@@ -12,7 +12,6 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class TaxNotice : InteractableHandler
 {
-    [SerializeField] private ITRSService itrs;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip nastySound;
     [SerializeField] private float nagInterval = 2f;
@@ -24,16 +23,17 @@ public class TaxNotice : InteractableHandler
     private float nagTimer;
     private ITRSService.Assessment pendingAssessment;
 
-    protected override void OnEnable()
+    private void Start()
     {
-        base.OnEnable();
-        if (itrs != null) itrs.OnAssessmentIssued += HandleAssessmentIssued;
+        // Not OnEnable: Awake order between Taxes and ITRSService isn't guaranteed,
+        // so ITRSService.Instance can still be null there. Start() only runs after
+        // every object's Awake has completed, so the singleton is always ready here.
+        ITRSService.Instance.OnAssessmentIssued += HandleAssessmentIssued;
     }
 
-    protected override void OnDisable()
+    private void OnDestroy()
     {
-        base.OnDisable();
-        if (itrs != null) itrs.OnAssessmentIssued -= HandleAssessmentIssued;
+        if (ITRSService.Instance != null) ITRSService.Instance.OnAssessmentIssued -= HandleAssessmentIssued;
     }
 
     private void HandleAssessmentIssued(ITRSService.Assessment assessment)

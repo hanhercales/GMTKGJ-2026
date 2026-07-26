@@ -11,9 +11,6 @@ using UnityEngine.UI;
 /// </summary>
 public class Tax : MonoBehaviour
 {
-    [Header("Trigger")]
-    [SerializeField] private ITRSService itrs;
-
     [Header("Notice of Assessment")]
     [SerializeField] private TextMeshProUGUI earnedValueText;
     [SerializeField] private TextMeshProUGUI rateValueText;
@@ -24,6 +21,7 @@ public class Tax : MonoBehaviour
     [SerializeField] private Button payButton;
     [SerializeField] private TextMeshProUGUI payButtonLabel;
     [SerializeField] private Button ignoreButton;
+    [SerializeField] private Button closeButton;
 
     private ITRSService.Assessment current;
 
@@ -31,6 +29,7 @@ public class Tax : MonoBehaviour
     {
         payButton.onClick.AddListener(HandlePay);
         ignoreButton.onClick.AddListener(HandleIgnore);
+        closeButton.onClick.AddListener(HandleClose);
     }
 
     public void Show(ITRSService.Assessment assessment)
@@ -53,12 +52,16 @@ public class Tax : MonoBehaviour
 
     private void HandlePay()
     {
-        if (itrs.Pay()) gameObject.SetActive(false);
+        if (ITRSService.Instance.Pay()) gameObject.SetActive(false);
     }
 
     private void HandleIgnore()
     {
-        itrs.Ignore();
+        ITRSService.Instance.Ignore();
         gameObject.SetActive(false);
     }
+
+    // Closing without deciding must still resolve the bill - otherwise HasPendingAssessment
+    // stays true forever and AnnoyanceManager stays busy, blocking every later annoyance.
+    private void HandleClose() => HandleIgnore();
 }

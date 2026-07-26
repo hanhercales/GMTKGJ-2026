@@ -2057,6 +2057,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4301718007558442292, guid: 98d1e96e6e6b8a3479b45cd20fc1f5b2, type: 3}
   m_PrefabInstance: {fileID: 690593111}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &690593113 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8229138964425870812, guid: 98d1e96e6e6b8a3479b45cd20fc1f5b2, type: 3}
+  m_PrefabInstance: {fileID: 690593111}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e58ffa2509671e4479fc5cdd187c1609, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Tax
 --- !u!1 &840618185
 GameObject:
   m_ObjectHideFlags: 0
@@ -2214,6 +2225,135 @@ Transform:
   - {fileID: 254732366}
   - {fileID: 1587364536}
   - {fileID: 287135819}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &916565334
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 916565336}
+  - component: {fileID: 916565335}
+  m_Layer: 0
+  m_Name: Audio Source
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &916565335
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 916565334}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &916565336
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 916565334}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &944747713 stripped
@@ -3532,16 +3672,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 1115311165}
     m_Modifications:
     - target: {fileID: -6690502762919160435, guid: b067f7ead2947924fb4cf69b88d352a1, type: 3}
-      propertyPath: itrs
+      propertyPath: taxPanel
       value: 
-      objectReference: {fileID: 1744790369}
+      objectReference: {fileID: 690593113}
+    - target: {fileID: -6690502762919160435, guid: b067f7ead2947924fb4cf69b88d352a1, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 916565335}
     - target: {fileID: 1969017891518498479, guid: b067f7ead2947924fb4cf69b88d352a1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.681861
+      value: -7
       objectReference: {fileID: 0}
     - target: {fileID: 1969017891518498479, guid: b067f7ead2947924fb4cf69b88d352a1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.7879269
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 1969017891518498479, guid: b067f7ead2947924fb4cf69b88d352a1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3579,10 +3723,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Taxes
       objectReference: {fileID: 0}
-    - target: {fileID: 7414995341819057335, guid: b067f7ead2947924fb4cf69b88d352a1, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3598,11 +3738,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4325069145617331834, guid: 297828727141b1f4a88069976b9fe015, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.116653
+      value: 6.68
       objectReference: {fileID: 0}
     - target: {fileID: 4325069145617331834, guid: 297828727141b1f4a88069976b9fe015, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.0835879
+      value: 1.55
       objectReference: {fileID: 0}
     - target: {fileID: 4325069145617331834, guid: 297828727141b1f4a88069976b9fe015, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3637,13 +3777,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5781605276870089319, guid: 297828727141b1f4a88069976b9fe015, type: 3}
-      propertyPath: clock
+      propertyPath: audioSource
       value: 
-      objectReference: {fileID: 1975152291}
-    - target: {fileID: 5781605276870089319, guid: 297828727141b1f4a88069976b9fe015, type: 3}
-      propertyPath: annoyance
-      value: 
-      objectReference: {fileID: 1587364537}
+      objectReference: {fileID: 916565335}
     - target: {fileID: 8561004537302652550, guid: 297828727141b1f4a88069976b9fe015, type: 3}
       propertyPath: m_Name
       value: Phone
@@ -3883,6 +4019,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1115311165}
     m_Modifications:
+    - target: {fileID: 4402328299800723801, guid: ddff55568fce87444acb8c555a704d95, type: 3}
+      propertyPath: pawnSound
+      value: 
+      objectReference: {fileID: 8300000, guid: b3736e663148a7b47a1676c9ed39e977, type: 3}
+    - target: {fileID: 4402328299800723801, guid: ddff55568fce87444acb8c555a704d95, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 916565335}
     - target: {fileID: 8452872453884296626, guid: ddff55568fce87444acb8c555a704d95, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.3515196
@@ -4330,28 +4474,8 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1115311165}
     m_Modifications:
-    - target: {fileID: 1677330049018887174, guid: c87bc5229f78a7a4fb1b0e99c5329e35, type: 3}
-      propertyPath: payoutText
-      value: 
-      objectReference: {fileID: 107890306}
-    - target: {fileID: 1677330049018887174, guid: c87bc5229f78a7a4fb1b0e99c5329e35, type: 3}
-      propertyPath: cashOutButton
-      value: 
-      objectReference: {fileID: 840618187}
-    - target: {fileID: 1677330049018887174, guid: c87bc5229f78a7a4fb1b0e99c5329e35, type: 3}
-      propertyPath: 'GameObjectsToEnableOnFocus.Array.data[0]'
-      value: 
-      objectReference: {fileID: 840618185}
     - target: {fileID: 2938119255078767140, guid: c87bc5229f78a7a4fb1b0e99c5329e35, type: 3}
       propertyPath: gameObjectToEnableOnFocus
-      value: 
-      objectReference: {fileID: 840618185}
-    - target: {fileID: 2938119255078767140, guid: c87bc5229f78a7a4fb1b0e99c5329e35, type: 3}
-      propertyPath: gameObjectsToEnableOnFocus.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2938119255078767140, guid: c87bc5229f78a7a4fb1b0e99c5329e35, type: 3}
-      propertyPath: 'gameObjectsToEnableOnFocus.Array.data[0]'
       value: 
       objectReference: {fileID: 840618185}
     - target: {fileID: 3144520575247802121, guid: c87bc5229f78a7a4fb1b0e99c5329e35, type: 3}
@@ -4378,17 +4502,9 @@ PrefabInstance:
       propertyPath: gameObjectToEnableOnFocus
       value: 
       objectReference: {fileID: 840618185}
-    - target: {fileID: 8294747907168040904, guid: c87bc5229f78a7a4fb1b0e99c5329e35, type: 3}
-      propertyPath: gameObjectsToEnableOnFocus.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8294747907168040904, guid: c87bc5229f78a7a4fb1b0e99c5329e35, type: 3}
-      propertyPath: 'gameObjectsToEnableOnFocus.Array.data[0]'
-      value: 
-      objectReference: {fileID: 840618185}
     - target: {fileID: 8843122883655712623, guid: c87bc5229f78a7a4fb1b0e99c5329e35, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.7799997
+      value: 5.87
       objectReference: {fileID: 0}
     - target: {fileID: 8843122883655712623, guid: c87bc5229f78a7a4fb1b0e99c5329e35, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4810,26 +4926,10 @@ PrefabInstance:
       propertyPath: gameObjectToEnableOnFocus
       value: 
       objectReference: {fileID: 840618185}
-    - target: {fileID: 5706701743493950900, guid: 5f8de3fe67963c94181d837e4838a13c, type: 3}
-      propertyPath: gameObjectsToEnableOnFocus.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5706701743493950900, guid: 5f8de3fe67963c94181d837e4838a13c, type: 3}
-      propertyPath: 'gameObjectsToEnableOnFocus.Array.data[0]'
-      value: 
-      objectReference: {fileID: 840618185}
     - target: {fileID: 6731194826625862665, guid: 5f8de3fe67963c94181d837e4838a13c, type: 3}
       propertyPath: gameObjectToEnableOnFocus
       value: 
       objectReference: {fileID: 840618185}
-    - target: {fileID: 6731194826625862665, guid: 5f8de3fe67963c94181d837e4838a13c, type: 3}
-      propertyPath: gameObjectsToEnableOnFocus.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6731194826625862665, guid: 5f8de3fe67963c94181d837e4838a13c, type: 3}
-      propertyPath: 'gameObjectsToEnableOnFocus.Array.data[0]'
-      value: 
-      objectReference: {fileID: 840618185}
     - target: {fileID: 7781524951638615338, guid: 5f8de3fe67963c94181d837e4838a13c, type: 3}
       propertyPath: payoutText
       value: 
@@ -4846,18 +4946,6 @@ PrefabInstance:
       propertyPath: cashOutButton
       value: 
       objectReference: {fileID: 840618187}
-    - target: {fileID: 9098928258271579326, guid: 5f8de3fe67963c94181d837e4838a13c, type: 3}
-      propertyPath: payoutText
-      value: 
-      objectReference: {fileID: 107890306}
-    - target: {fileID: 9098928258271579326, guid: 5f8de3fe67963c94181d837e4838a13c, type: 3}
-      propertyPath: cashOutButton
-      value: 
-      objectReference: {fileID: 840618187}
-    - target: {fileID: 9098928258271579326, guid: 5f8de3fe67963c94181d837e4838a13c, type: 3}
-      propertyPath: 'GameObjectsToEnableOnFocus.Array.data[0]'
-      value: 
-      objectReference: {fileID: 840618185}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4876,3 +4964,4 @@ SceneRoots:
   - {fileID: 39421291}
   - {fileID: 435571986}
   - {fileID: 440346632}
+  - {fileID: 916565336}

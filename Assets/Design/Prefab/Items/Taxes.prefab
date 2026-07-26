@@ -125,7 +125,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -165,9 +165,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aac8f7958a14c05459db7cfae3ba1425, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TaxNotice
-  itrs: {fileID: 0}
   audioSource: {fileID: 0}
-  nastySound: {fileID: 0}
+  nastySound: {fileID: 8300000, guid: c7f2fd5c6b8bdf04b892d580eddc1b11, type: 3}
   nagInterval: 2
   taxPanel: {fileID: 0}
   noticeVisual: {fileID: 8706151414547457322}

@@ -451,7 +451,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc04a5d2463022049bd6bb53fa38913c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Phone
-  config: {fileID: 11400000, guid: 7ea21df957282fd4c81d0d031ab47a59, type: 2}
-  clock: {fileID: 0}
-  annoyance: {fileID: 0}
   ringingVisual: {fileID: 5744004842502728757}
+  audioSource: {fileID: 0}
+  ringSound: {fileID: 8300000, guid: 157de1489c950c240b0fc5b8f2113778, type: 3}
