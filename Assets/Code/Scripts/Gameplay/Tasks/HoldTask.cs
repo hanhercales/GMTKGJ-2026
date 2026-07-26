@@ -64,6 +64,13 @@ public class HoldTask : TaskBase, IPawnable
         if(ResetProgressOnRelease)
             holdTimer = 0f;
     }
+    
+    protected void ResetHoldState()
+    {
+        isHolding = false;
+        holdTimer = 0f;
+        ResetCompletion();
+    }
 
     protected override void ApplyReward()
     {

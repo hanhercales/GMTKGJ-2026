@@ -8,6 +8,8 @@ public class InputManager : MonoBehaviour
 
     [SerializeField] private LayerMask interactableLayers = ~0;
     
+    public bool IsInputEnabled { get; set; } = true;
+    
     private Vector2 lastPointerPos;
     private bool hasLastPointerPos;
 
@@ -62,6 +64,8 @@ public class InputManager : MonoBehaviour
 
     private void OnClickStarted(InputAction.CallbackContext context)
     {
+        if (!IsInputEnabled) return;
+        
         Vector2 worldPos = GetPointerWorldPos();
         Collider2D hit = Physics2D.OverlapPoint(worldPos, interactableLayers);
         if (hit == null) return;

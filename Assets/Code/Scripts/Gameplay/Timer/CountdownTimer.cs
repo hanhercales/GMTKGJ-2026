@@ -8,7 +8,7 @@ public class CountdownTimer : MonoBehaviour
     public static CountdownTimer Instance{get; private set;}
 
     [Header("Settings")]
-    [SerializeField] private float startingTime = 60f;
+    [SerializeField] private float startingTime;
     [SerializeField] private bool startOnAwake = true;
     
     [Header("UI")]
@@ -23,7 +23,6 @@ public class CountdownTimer : MonoBehaviour
     private bool isSpeedOverridden;
     private float overrideTimeRemaining;
 
-    public float StartingTime => startingTime;
     public float RemainingTime { get; private set; }
     public bool IsRunning { get; private set; }
     public bool IsGameOver { get; private set; }
@@ -48,6 +47,7 @@ public class CountdownTimer : MonoBehaviour
 
     private void Start()
     {
+        startingTime = GameManager.Instance.GameConfig.startClock;
         RemainingTime = startingTime;
         UpdateDisplay();
 

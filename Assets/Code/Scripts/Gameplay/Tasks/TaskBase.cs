@@ -22,6 +22,8 @@ public abstract class TaskBase : MonoBehaviour
         if (ResetAfterComplete) IsCompleted = false;
     }
     
+    protected void ResetCompletion() => IsCompleted = false;
+    
     protected virtual void ApplyReward()
     {
         MoneyService.Instance.Add(moneyReward, "task");
