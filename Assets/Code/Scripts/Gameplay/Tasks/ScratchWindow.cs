@@ -19,7 +19,10 @@ public class ScratchWindow : HoldTask
     protected override void OnTaskCompleted()
     {
         if (spriteRenderer != null && assignedSymbol != null)
+        {
             spriteRenderer.sprite = assignedSymbol;
+            spriteRenderer.color = Color.white;
+        }
         
         Revealed?.Invoke(this);
     }

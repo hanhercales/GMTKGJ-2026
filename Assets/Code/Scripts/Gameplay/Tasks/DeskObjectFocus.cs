@@ -11,10 +11,14 @@ public class DeskObjectFocus : MonoBehaviour
     [SerializeField] private int focusedSortingOrder = 100;
     [SerializeField] private Behaviour[] componentsToEnableOnFocus;
     
+    private GameObject[] gameObjectsToEnableOnFocus;
     private PointerReceiver receiver;
     private SpriteRenderer[] renderers;
     private Collider2D ownCollider;
-
+    
+    
+    public void SetExtraObjects(GameObject[] objects) => gameObjectsToEnableOnFocus = objects; 
+    
     private Vector3 originalPosition;
     private Vector3 originalScale;
     private int[] originalSortingOrders;
@@ -47,16 +51,24 @@ public class DeskObjectFocus : MonoBehaviour
 
     private void Focus()
     {
+        CountdownTimer.Instance.PauseCountdown();
+        
         if(isFocused)  return;
         isFocused = true;
         
         transform.position = focusedPosition;
         transform.localScale = focusedScale;
+        
+        int baseOffset = focusedSortingOrder - originalSortingOrders[0];
 
-        foreach (var r in renderers) r.sortingOrder = focusedSortingOrder;
+        for (int i = 0; i < renderers.Length; i++)
+            renderers[i].sortingOrder = originalSortingOrders[i] + baseOffset;
         
         ownCollider.enabled = false;
         SetInteractable(true);
+
+        foreach (var go in gameObjectsToEnableOnFocus)
+            if (go != null) go.SetActive(true);
     }
     
     public void Unfocus()
@@ -72,6 +84,11 @@ public class DeskObjectFocus : MonoBehaviour
 
         ownCollider.enabled = true;
         SetInteractable(false);
+        
+        foreach (var go in gameObjectsToEnableOnFocus)
+            if (go != null) go.SetActive(false);
+        
+        CountdownTimer.Instance.ResumeCountdown();
     }
     
     private void SetInteractable(bool value)

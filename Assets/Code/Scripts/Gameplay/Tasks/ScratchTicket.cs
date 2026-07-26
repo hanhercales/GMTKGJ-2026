@@ -20,10 +20,9 @@ public class ScratchTicket : MonoBehaviour
     [Header("Auto Resolve")]
     [SerializeField, Range(0f, 1f)] private float autoResolveThreshold = 0.8f;
     
-    [Header("UI")]
-    [SerializeField] private TextMeshProUGUI payoutText;
-    [SerializeField] private Button cashOutButton;
-
+    private TextMeshProUGUI payoutText;
+    private Button cashOutButton;
+    private DeskObjectFocus deskObjectFocus;
     private int revealedCount;
     private int rolledPayout;
     private bool hasAutoRevealed;
@@ -32,16 +31,15 @@ public class ScratchTicket : MonoBehaviour
 
     private void Awake()
     {
+        deskObjectFocus = GetComponent<DeskObjectFocus>();
+        
         foreach (var window in windows)
         {
             window.SetHoldDuration(scratchTime / windows.Length);
             window.Revealed += HandleWindowReveal;
         }
         
-        cashOutButton.onClick.AddListener(HandleCashOutClicked);
-        
         RollAndAssignSymbols();
-        UpdatePayoutDisplay();
     }
     
     private void OnDestroy()
@@ -104,6 +102,8 @@ public class ScratchTicket : MonoBehaviour
         int currentAmount = Mathf.RoundToInt((float)rolledPayout * revealedCount / windows.Length);
         LockTicket(currentAmount, "scratch ticket cash out");
         
+        if (deskObjectFocus != null) deskObjectFocus.Unfocus();
+        
         Destroy(gameObject);
     }
 
@@ -113,6 +113,15 @@ public class ScratchTicket : MonoBehaviour
         
         int displayedAmount = Mathf.RoundToInt((float)rolledPayout * revealedCount / windows.Length);
         payoutText.text = $"${displayedAmount}";
+    }
+
+    public void SetUIReferences(TextMeshProUGUI payoutTextRef, Button cashOutButtonRef)
+    {
+        payoutText = payoutTextRef;
+        cashOutButton = cashOutButtonRef;
+
+        cashOutButton.onClick.AddListener(HandleCashOutClicked);
+        UpdatePayoutDisplay();
     }
 
     private void ResolveOutcome()
