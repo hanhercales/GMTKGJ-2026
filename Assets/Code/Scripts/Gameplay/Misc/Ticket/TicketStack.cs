@@ -6,12 +6,9 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Collider2D))]
 public class TicketStack : MonoBehaviour, IPawnable
 {
-    [SerializeField] private ScratchTicket ticketPrefab;
+    [SerializeField] private ScratchTicket[] ticketPool;
     [SerializeField] private Vector2 spawnRangeMin = new Vector2(-4f, -3f);
     [SerializeField] private Vector2 spawnRangeMax = new Vector2(4f, 3f);
-    [SerializeField] private TextMeshProUGUI payoutText;
-    [SerializeField] private Button cashOutButton;
-    [SerializeField] private GameObject[] GameObjectsToEnableOnFocus;
     
     [Header("Pawn")]
     [SerializeField] private int pawnValue = 20;
@@ -19,10 +16,15 @@ public class TicketStack : MonoBehaviour, IPawnable
     public int PawnValue => pawnValue;
     
     private PointerReceiver receiver;
+    private int ticketRemain;
     
     private void Awake()
     {
         receiver = GetComponent<PointerReceiver>();
+        ticketRemain = ticketPool.Length;
+        
+        foreach (var ticket in ticketPool)
+            ticket.gameObject.SetActive(false); 
     }
 
     private void OnEnable() => receiver.ClickDown += HandleClick;
@@ -30,21 +32,16 @@ public class TicketStack : MonoBehaviour, IPawnable
 
     private void HandleClick(Vector2 worldPos)
     {
-        if (ticketPrefab == null) return;
+        if (ticketRemain <= 0) return;
         
-        Vector2 spawnPos = GetRandomSpawnPosition(); 
+        ScratchTicket ticket = ticketPool[ticketPool.Length - ticketRemain];
+        ticketRemain--;
+
+        ticket.transform.position = GetRandomSpawnPosition();
+        ticket.gameObject.SetActive(true);
         
-        ScratchTicket prefab = Instantiate(ticketPrefab, spawnPos, Quaternion.identity);
-        
-        prefab.SetUIReferences(payoutText, cashOutButton);
-        
-        if (prefab.TryGetComponent(out DeskObjectFocus focus))
-            focus.SetExtraObjects(GameObjectsToEnableOnFocus);
-        
-        if (!prefab.TryPurchase())
-        {
-            Destroy(prefab.gameObject);
-        }
+        if (!ticket.TryPurchase())
+            ticket.gameObject.SetActive(false);
     }
 
     private Vector2 GetRandomSpawnPosition()

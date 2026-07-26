@@ -12,7 +12,7 @@ public class DragTask : TaskBase, IPawnable
     
     [Header("Spawn On Complete")]
     [SerializeField] private GameObject spawnPrefab;
-    [SerializeField] private Transform spawnPoint;
+    [SerializeField] private Vector3 spawnPoint;
     
     [Header("Pawn")]
     [SerializeField] private int pawnValue = 20;
@@ -87,7 +87,7 @@ public class DragTask : TaskBase, IPawnable
     {
         if (spawnPrefab != null)
         {
-            Vector3 pos = spawnPoint != null ? spawnPoint.position : transform.position;
+            Vector3 pos = spawnPoint != null ? spawnPoint : transform.position;
             Instantiate(spawnPrefab, pos, Quaternion.identity);
         }
     }

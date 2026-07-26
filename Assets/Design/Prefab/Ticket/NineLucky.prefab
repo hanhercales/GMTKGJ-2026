@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2805614219323669021}
   - component: {fileID: 248404844593305707}
   - component: {fileID: 6577051263929670}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: NineLucky
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -214,6 +214,8 @@ MonoBehaviour:
   - {fileID: -2043217292, guid: d386967dad74a9f4492dac04659e991a, type: 3}
   - {fileID: 1117286177, guid: d386967dad74a9f4492dac04659e991a, type: 3}
   autoResolveThreshold: 0.8
+  payoutText: {fileID: 0}
+  cashOutButton: {fileID: 0}
 --- !u!1001 &871814601268713071
 PrefabInstance:
   m_ObjectHideFlags: 0
