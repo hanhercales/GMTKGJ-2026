@@ -25,22 +25,51 @@ public class LaptopController : MonoBehaviour
 
     private void Start()
     {
+        // Apps are siblings under the same Canvas, not children of this
+        // GameObject - they don't inherit visibility from the Laptop panel
+        // being open/closed. Start with none open; the home screen (Apps
+        // grid) is what shows when the Laptop panel itself is opened.
         foreach (var app in apps)
+        {
+            if (app == null) continue; // an unfilled slot in the Apps list
             app.gameObject.SetActive(false);
-
-        if (apps.Count > 0) OpenImmediate(apps[0]);
+        }
     }
 
     public void RequestOpen(LaptopApp app)
     {
-        if (Disabled || _switching || app == _current) return;
+        if (app == null || Disabled || _switching || app == _current) return;
         StartCoroutine(SwitchRoutine(app));
     }
 
     public void RequestOpen(string appName)
     {
-        var app = apps.Find(a => a.AppName == appName);
+        var app = apps.Find(a => a != null && a.AppName == appName);
         if (app != null) RequestOpen(app);
+    }
+
+    /// <summary>Closes whichever app is open and drops back to the home screen (Apps grid). Free - unlike switching between apps, going home isn't a paid action.</summary>
+    public void CloseCurrentApp()
+    {
+        if (_current == null || _switching) return;
+
+        _current.OnAppClosed();
+        _current.gameObject.SetActive(false);
+        _current = null;
+    }
+
+    /// <summary>
+    /// Closes the whole laptop, back to the desk. Apps are siblings of the
+    /// Laptop panel, not children of it (see Start()), so hiding this
+    /// GameObject alone would leave an open app floating on screen with no
+    /// laptop shell around it - close the current app first so its own
+    /// OnAppClosed cleanup (e.g. forfeiting unbanked mining/blackjack money)
+    /// still runs.
+    /// </summary>
+    public void CloseLaptop()
+    {
+        CloseCurrentApp();
+        gameObject.SetActive(false);
     }
 
     /// <summary>
