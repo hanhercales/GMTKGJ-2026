@@ -1,11 +1,16 @@
 using System;
 using UnityEngine;
 
-public class CardItem : InteractableHandler
+public class CardItem : InteractableHandler, IPawnable
 {
     [Header("Click")]
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Sprite clickedSprite;
+    
+    [Header("Pawn")]
+    [SerializeField] private int pawnValue = 20;
+    
+    public int PawnValue => pawnValue;
 
     private void Start()
     {

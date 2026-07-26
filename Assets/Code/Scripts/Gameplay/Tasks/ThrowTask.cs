@@ -5,7 +5,7 @@ using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(PointerReceiver))]
-public class ThrowTask : TaskBase
+public class ThrowTask : TaskBase, IPawnable
 {
     [Header("Settings")]
     [SerializeField] private Transform pullHandle;
@@ -14,6 +14,11 @@ public class ThrowTask : TaskBase
     [SerializeField] private string targetTag = "Target";
     [SerializeField] private float settleVelocityThreshold = 0.05f;
     [SerializeField] private float settleGraceTime = 0.15f;
+    
+    [Header("Pawn")]
+    [SerializeField] private int pawnValue = 20;
+    
+    public int PawnValue => pawnValue;
     
     private PointerReceiver receiver;
     private Rigidbody2D rb;
@@ -116,6 +121,6 @@ public class ThrowTask : TaskBase
 
     protected override void OnTaskCompleted()
     {
-        rb.bodyType = RigidbodyType2D.Kinematic;
+        Destroy(this.gameObject);
     }
 }

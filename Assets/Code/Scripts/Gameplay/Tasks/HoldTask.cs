@@ -2,11 +2,16 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(PointerReceiver))]
-public class HoldTask : TaskBase
+public class HoldTask : TaskBase, IPawnable
 {
     [Header("Settings")]
     [SerializeField] private float holdDuration = 2f;
     [SerializeField] private float timePayout = 3f;
+    
+    [Header("Pawn")]
+    [SerializeField] private int pawnValue = 20;
+    
+    public int PawnValue => pawnValue;
 
     private PointerReceiver receiver;
     private float holdTimer;
