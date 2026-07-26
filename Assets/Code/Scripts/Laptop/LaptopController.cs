@@ -25,21 +25,26 @@ public class LaptopController : MonoBehaviour
 
     private void Start()
     {
+        // Apps are siblings under the same Canvas, not children of this
+        // GameObject - they don't inherit visibility from the Laptop panel
+        // being open/closed. Start with none open; the home screen (Apps
+        // grid) is what shows when the Laptop panel itself is opened.
         foreach (var app in apps)
+        {
+            if (app == null) continue; // an unfilled slot in the Apps list
             app.gameObject.SetActive(false);
-
-        if (apps.Count > 0) OpenImmediate(apps[0]);
+        }
     }
 
     public void RequestOpen(LaptopApp app)
     {
-        if (Disabled || _switching || app == _current) return;
+        if (app == null || Disabled || _switching || app == _current) return;
         StartCoroutine(SwitchRoutine(app));
     }
 
     public void RequestOpen(string appName)
     {
-        var app = apps.Find(a => a.AppName == appName);
+        var app = apps.Find(a => a != null && a.AppName == appName);
         if (app != null) RequestOpen(app);
     }
 

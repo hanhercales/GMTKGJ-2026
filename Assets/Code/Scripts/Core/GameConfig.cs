@@ -19,9 +19,9 @@ public class GameConfig : ScriptableObject
     public float targetRunLengthMax = 300f;
 
     [Header("Mining (§5.2)")]
-    public float blockDuration = 1f;
     public int[] blockPayout = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-    public int veinLength = 10;
+    public int veinLengthMin = 6;
+    public int veinLengthMax = 10;
     public float veinRespawn = 1.5f;
 
     [Header("Ticket - Triple Match (§5.3)")]
