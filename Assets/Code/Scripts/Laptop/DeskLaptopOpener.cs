@@ -5,9 +5,14 @@ using UnityEngine;
 /// UI panel (the home screen with the app icons). Closing happens via the
 /// panel's own CloseButton, not by clicking the desk object again.
 /// </summary>
-public class DeskLaptopOpener : InteractableHandler
+public class DeskLaptopOpener : InteractableHandler, IPawnable
 {
     [SerializeField] private GameObject laptopPanel;
+    
+    [Header("Pawn")]
+    [SerializeField] private int pawnValue = 20;
+    
+    public int PawnValue => pawnValue;
 
     protected override void OnClicked(Vector2 worldPos)
     {

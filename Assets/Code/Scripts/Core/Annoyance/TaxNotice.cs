@@ -10,7 +10,7 @@ using UnityEngine;
 /// </summary>
 [RequireComponent(typeof(PointerReceiver))]
 [RequireComponent(typeof(Collider2D))]
-public class TaxNotice : InteractableHandler
+public class TaxNotice : InteractableHandler, IPawnable
 {
     [SerializeField] private ITRSService itrs;
     [SerializeField] private AudioSource audioSource;
@@ -18,6 +18,11 @@ public class TaxNotice : InteractableHandler
     [SerializeField] private float nagInterval = 2f;
     [SerializeField] private Tax taxPanel;
     [SerializeField] private GameObject noticeVisual;
+    
+    [Header("Pawn")]
+    [SerializeField] private int pawnValue = 20;
+    
+    public int PawnValue => pawnValue;
 
     public bool HasPendingBill { get; private set; }
 

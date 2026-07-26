@@ -9,14 +9,16 @@ using UnityEngine;
 /// so it never lands within annoyanceMinGap of another interruption (I8).
 /// </summary>
 [RequireComponent(typeof(Collider2D))]
-public class Phone : InteractableHandler
+public class Phone : InteractableHandler, IPawnable
 {
     public static Phone Instance { get; private set; }
 
-    [SerializeField] private GameConfig config;
-    [SerializeField] private CountdownTimer clock;
-    [SerializeField] private AnnoyanceManager annoyance;
     [SerializeField] private GameObject ringingVisual;
+    
+    [Header("Pawn")]
+    [SerializeField] private int pawnValue = 20;
+    
+    public int PawnValue => pawnValue;
 
     public bool IsRinging { get; private set; }
     public event Action OnRingStart;
@@ -43,8 +45,8 @@ public class Phone : InteractableHandler
 
     private void ScheduleNextRing()
     {
-        float min = config.ringIntervalMin;
-        float max = config.ringIntervalMax;
+        float min = GameManager.Instance.GameConfig.ringIntervalMin;
+        float max = GameManager.Instance.GameConfig.ringIntervalMax;
         if (robocallsActive) { min *= 0.5f; max *= 0.5f; }
 
         nextRingTimer = min + (float)RngService.Instance.Random.NextDouble() * (max - min);
@@ -52,7 +54,7 @@ public class Phone : InteractableHandler
 
     private void Update()
     {
-        if (!clock.IsRunning || clock.IsGameOver) return;
+        if (!CountdownTimer.Instance.IsRunning || CountdownTimer.Instance.IsGameOver) return;
 
         if (silenced)
         {
@@ -80,9 +82,9 @@ public class Phone : InteractableHandler
         if (answeringElapsed >= 0f)
         {
             answeringElapsed += Time.deltaTime;
-            if (answeringElapsed >= config.answerTime) StopRing();
+            if (answeringElapsed >= GameManager.Instance.GameConfig.answerTime) StopRing();
         }
-        else if (ringElapsed >= config.maxRingDuration)
+        else if (ringElapsed >= GameManager.Instance.GameConfig.maxRingDuration)
         {
             StopRing();
         }
@@ -90,7 +92,7 @@ public class Phone : InteractableHandler
 
     private void TryStartRing()
     {
-        if (annoyance != null && !annoyance.TryBegin("phone"))
+        if (AnnoyanceManager.Instance != null && !AnnoyanceManager.Instance.TryBegin("phone"))
         {
             nextRingTimer = 1f; // retry shortly rather than skipping this ring
             return;
@@ -99,7 +101,7 @@ public class Phone : InteractableHandler
         IsRinging = true;
         ringElapsed = 0f;
         answeringElapsed = -1f;
-        clock.TickMultiplier = config.ringEffectMultiplier;
+        CountdownTimer.Instance.TickMultiplier = GameManager.Instance.GameConfig.ringEffectMultiplier;
 
         if (ringingVisual) ringingVisual.SetActive(true);
         OnRingStart?.Invoke();
@@ -108,10 +110,10 @@ public class Phone : InteractableHandler
     private void StopRing()
     {
         IsRinging = false;
-        clock.TickMultiplier = 1f;
+        CountdownTimer.Instance.TickMultiplier = 1f;
 
         if (ringingVisual) ringingVisual.SetActive(false);
-        annoyance?.End("phone");
+        AnnoyanceManager.Instance?.End("phone");
 
         ScheduleNextRing();
         OnRingEnd?.Invoke();

@@ -12,7 +12,6 @@ using UnityEngine;
 /// </summary>
 public class LaptopController : MonoBehaviour
 {
-    [SerializeField] private GameConfig config;
     [SerializeField] private List<LaptopApp> apps = new List<LaptopApp>();
     [SerializeField] private GameObject switchingOverlay;
 
@@ -87,7 +86,7 @@ public class LaptopController : MonoBehaviour
             _current.gameObject.SetActive(false);
         }
 
-        yield return new WaitForSeconds(config.laptopSwitchTime);
+        yield return new WaitForSeconds(GameManager.Instance.GameConfig.laptopSwitchTime);
 
         OpenImmediate(next);
 

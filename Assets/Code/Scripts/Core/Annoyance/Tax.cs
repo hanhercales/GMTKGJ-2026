@@ -11,9 +11,6 @@ using UnityEngine.UI;
 /// </summary>
 public class Tax : MonoBehaviour
 {
-    [Header("Trigger")]
-    [SerializeField] private ITRSService itrs;
-
     [Header("Notice of Assessment")]
     [SerializeField] private TextMeshProUGUI earnedValueText;
     [SerializeField] private TextMeshProUGUI rateValueText;
@@ -24,7 +21,7 @@ public class Tax : MonoBehaviour
     [SerializeField] private Button payButton;
     [SerializeField] private TextMeshProUGUI payButtonLabel;
     [SerializeField] private Button ignoreButton;
-
+    
     private ITRSService.Assessment current;
 
     private void Awake()
@@ -53,12 +50,12 @@ public class Tax : MonoBehaviour
 
     private void HandlePay()
     {
-        if (itrs.Pay()) gameObject.SetActive(false);
+        if (ITRSService.Instance.Pay()) gameObject.SetActive(false);
     }
 
     private void HandleIgnore()
     {
-        itrs.Ignore();
+        ITRSService.Instance.Ignore();
         gameObject.SetActive(false);
     }
 }
