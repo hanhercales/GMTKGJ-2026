@@ -8,7 +8,6 @@ public class TimerDropSpawner : MonoBehaviour
 {
     [Header("Drop Settings")]
     [SerializeField] private GameObject[] dropPool;
-    [SerializeField, Range(0f, 1f)] private float dropChance = 0.3f;
     [SerializeField] private float spawnDelay = 0.3f;
     
     [Header("Throw Settings")]
@@ -20,7 +19,7 @@ public class TimerDropSpawner : MonoBehaviour
     {
         if (!other.collider.TryGetComponent(out ThrowTask _)) return;
         if (!CardHandManager.Instance.HasRoom) return;
-        if (Random.value > dropChance) return;
+        if (Random.value > GameManager.Instance.GameConfig.hitDropChance) return;
 
         Vector2 contactPoint = other.GetContact(0).point;
         StartCoroutine(SpawnRandomDropDelayed(contactPoint));

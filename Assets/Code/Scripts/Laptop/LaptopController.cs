@@ -37,7 +37,8 @@ public class LaptopController : MonoBehaviour
 
     public void RequestOpen(LaptopApp app)
     {
-        if (app == null || Disabled || _switching || app == _current) return;
+        if (app == null || Disabled || _switching) return;
+        if (app == _current && app.gameObject.activeSelf) return;
         StartCoroutine(SwitchRoutine(app));
     }
 

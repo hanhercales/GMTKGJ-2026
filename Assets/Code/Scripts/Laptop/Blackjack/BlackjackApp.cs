@@ -220,11 +220,14 @@ public class BlackjackApp : LaptopApp
         // Closing the app mid-hand FORFEITS the ante and the hand.
         // Intentional: the player already paid, and letting them park a
         // live hand while they mine would break the lockout.
-        if (_game.State == HandState.PlayerTurn)
+        bool idle = _game.State == HandState.Idle && !_resolving;
+        if (!idle)
         {
+            StopAllCoroutines();
             _game.Reset();
             _resolving = false;
-            StopAllCoroutines();
+            HideWinBadges();
+            winningOutcomeLabel.text = _payoutInfoText;
         }
     }
 

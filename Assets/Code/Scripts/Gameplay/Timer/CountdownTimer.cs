@@ -52,7 +52,10 @@ public class CountdownTimer : MonoBehaviour
         UpdateDisplay();
 
         if (startOnAwake)
+        {
             StartCountdown();
+            PauseCountdown();
+        }
     }
 
     private void Update()
@@ -79,18 +82,7 @@ public class CountdownTimer : MonoBehaviour
         if(IsGameOver) return;
         IsRunning = true;
     }
-
-    public void ResetCountdown(float? newStartingTime = null)
-    {
-        if(newStartingTime.HasValue)
-            startingTime = newStartingTime.Value;
-        
-        RemainingTime = startingTime;
-        IsGameOver = false;
-        IsRunning = false;
-        UpdateDisplay();
-    }
-
+    
     private void RunTimer()
     {
         if (!IsRunning || IsGameOver) return;
@@ -125,7 +117,7 @@ public class CountdownTimer : MonoBehaviour
         OnTimeChanged?.Invoke(RemainingTime);
         UpdateDisplay();
 
-        if (RemainingTime <= 0f)
+        if (RemainingTime <= GameManager.Instance.GameConfig.loseClock)
             EndCountdown();
     }
     

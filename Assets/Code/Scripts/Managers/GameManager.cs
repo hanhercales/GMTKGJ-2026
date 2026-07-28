@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
     [Header("Win/Lose UI")]
     [SerializeField] private GameObject winScreen;
     [SerializeField] private GameObject loseScreen;
+    
+    [Header("Input Blockers")]
+    [SerializeField] private GameObject[] inputBlockers;
 
     public GameConfig GameConfig => config;
     public bool IsGameOver { get; private set; }
@@ -26,7 +29,24 @@ public class GameManager : MonoBehaviour
         CountdownTimer.Instance.OnTimeChanged += HandleTimeChanged;
         CountdownTimer.Instance.OnCountdownFinished += HandleCountdownFinished;
     }
-    
+
+    private void Update()
+    {
+        if (IsGameOver) return;
+        
+        bool anyBlockerActive = false;
+        foreach (var go in inputBlockers)
+        {
+            if (go != null && go.activeInHierarchy)
+            {
+                anyBlockerActive = true;
+                break;
+            }
+        }
+
+        InputManager.Instance.IsInputEnabled = !anyBlockerActive;
+    }
+
     private void HandleTimeChanged(float currentSeconds)
     {
         if (IsGameOver) return;

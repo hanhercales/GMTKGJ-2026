@@ -4,9 +4,9 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(PointerReceiver))]
 public class HoldTask : TaskBase, IPawnable
 {
-    [Header("Settings")]
-    [SerializeField] private float holdDuration = 2f;
-    [SerializeField] private float timePayout = 3f;
+    [Header("Sprite Animation")]
+    [SerializeField] protected SpriteRenderer spriteRenderer;
+    [SerializeField] private Sprite[] holdSprites;
     
     [Header("Pawn")]
     [SerializeField] private int pawnValue = 20;
@@ -19,7 +19,7 @@ public class HoldTask : TaskBase, IPawnable
 
     protected override bool ResetAfterComplete => true;
     protected virtual bool ResetProgressOnRelease => true;
-    public void SetHoldDuration(float duration) => holdDuration = duration;
+    public void SetHoldDuration(float duration) => GameManager.Instance.GameConfig.crankTime = duration;
     
     protected virtual void Awake()
     {
@@ -50,8 +50,9 @@ public class HoldTask : TaskBase, IPawnable
         if(!isHolding) return;
         
         holdTimer += Time.deltaTime;
+        UpdateHoldSprite();
 
-        if (holdTimer >= holdDuration)
+        if (holdTimer >= GameManager.Instance.GameConfig.crankTime)
         {
             isHolding = false;
             CompleteTask();
@@ -62,7 +63,21 @@ public class HoldTask : TaskBase, IPawnable
     {
         isHolding = false;
         if(ResetProgressOnRelease)
+        {
             holdTimer = 0f;
+            
+            if (spriteRenderer != null && holdSprites.Length > 0)
+                spriteRenderer.sprite = holdSprites[0];
+        }
+    }
+
+    private void UpdateHoldSprite()
+    {
+        if (spriteRenderer == null || holdSprites.Length == 0) return;
+
+        float progress = Mathf.Clamp01(holdTimer / GameManager.Instance.GameConfig.crankTime);
+        int index = Mathf.Min(Mathf.FloorToInt(progress * holdSprites.Length), holdSprites.Length - 1);
+        spriteRenderer.sprite = holdSprites[index];
     }
     
     protected void ResetHoldState()
@@ -74,6 +89,6 @@ public class HoldTask : TaskBase, IPawnable
 
     protected override void ApplyReward()
     {
-        CountdownTimer.Instance.AddTime(timePayout);
+        CountdownTimer.Instance.AddTime(GameManager.Instance.GameConfig.timePayout);
     }
 }

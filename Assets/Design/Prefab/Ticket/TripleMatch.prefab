@@ -86,7 +86,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 100
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: -6467537029916428044, guid: 57d21df582628d74288a10e18dbfc84b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -195,14 +195,13 @@ MonoBehaviour:
   - {fileID: 2234541514765411508}
   - {fileID: 5728245667236322531}
   - {fileID: 7850442266792466797}
-  baseReward: 40
+  baseReward: 55
   symbolPool:
   - {fileID: -991425494, guid: d386967dad74a9f4492dac04659e991a, type: 3}
   - {fileID: -1197596626, guid: d386967dad74a9f4492dac04659e991a, type: 3}
   - {fileID: -838796887, guid: d386967dad74a9f4492dac04659e991a, type: 3}
   - {fileID: -2043217292, guid: d386967dad74a9f4492dac04659e991a, type: 3}
   - {fileID: 1117286177, guid: d386967dad74a9f4492dac04659e991a, type: 3}
-  autoResolveThreshold: 0.8
   payoutText: {fileID: 0}
   cashOutButton: {fileID: 0}
 --- !u!1001 &66712114402997418

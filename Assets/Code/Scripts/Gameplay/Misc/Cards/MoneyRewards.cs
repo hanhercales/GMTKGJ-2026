@@ -9,6 +9,6 @@ public class MoneyRewards : MonoBehaviour, ICardEffect
         if (moneyAmount >= 0)
             MoneyService.Instance.Add(moneyAmount, "Card reward");
         else
-            MoneyService.Instance.TrySpend(-moneyAmount, "Card penalty");
+            CountdownTimer.Instance.SubstractTime(-moneyAmount);
     }
 }

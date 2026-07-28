@@ -5,8 +5,6 @@ public class ScratchWindow : HoldTask
 {
     public event Action<ScratchWindow> Revealed;
     
-    [SerializeField] private SpriteRenderer spriteRenderer;
-    
     private Sprite assignedSymbol;
     private Sprite originalSprite;
     private Color originalColor;

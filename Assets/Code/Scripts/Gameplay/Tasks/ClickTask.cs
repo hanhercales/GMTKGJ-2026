@@ -1,11 +1,14 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(PointerReceiver))]
 public class ClickTask : TaskBase, IPawnable
 {
-    [Header("Settings")] [SerializeField] private int requiredClicks = 1;
+    [Header("Settings")] 
+    [SerializeField] private int requiredClicks = 1;
+    [SerializeField] private float lockDuration = 3f;
     
     [Header("Pawn")]
     [SerializeField] private int pawnValue = 20;
@@ -27,5 +30,20 @@ public class ClickTask : TaskBase, IPawnable
         currentClicks++;
         
         if(currentClicks >= requiredClicks) CompleteTask();
+    }
+
+    protected override void OnTaskCompleted()
+    {
+        gameObject.GetComponent<SpriteRenderer>().color = Color.gray4;
+        StartCoroutine(UnlockAfterDelay());
+    }
+
+    private IEnumerator UnlockAfterDelay()
+    {
+        yield return new WaitForSeconds(lockDuration);
+        
+        currentClicks = 0; 
+        gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+        ResetCompletion();
     }
 }

@@ -180,4 +180,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a37289751e9de874494cd6819899186b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoneyRewards
-  moneyAmount: 5
+  moneyAmount: 15

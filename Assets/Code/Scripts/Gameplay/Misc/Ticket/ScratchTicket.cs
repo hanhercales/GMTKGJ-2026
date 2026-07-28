@@ -16,9 +16,6 @@ public class ScratchTicket : MonoBehaviour
 
     [Header("Symbols")]
     [SerializeField] private Sprite[] symbolPool;
-
-    [Header("Auto Resolve")]
-    [SerializeField, Range(0f, 1f)] private float autoResolveThreshold = 0.8f;
     
     [Header("UI")]
     [SerializeField] private TextMeshProUGUI payoutText;
@@ -27,8 +24,6 @@ public class ScratchTicket : MonoBehaviour
     private DeskObjectFocus deskObjectFocus;
     private Dictionary<Sprite, int> revealedCounts = new Dictionary<Sprite, int>();
     private int revealedCount;
-    private int rolledPayout;
-    private bool hasAutoRevealed;
     private bool isResolved;
     private bool isPurchased;
 
@@ -104,19 +99,19 @@ public class ScratchTicket : MonoBehaviour
         
         UpdatePayoutDisplay();
         
-        float clearedRatio = (float)revealedCount / windows.Length;
-
-        if (clearedRatio >= autoResolveThreshold)
+        if (revealedCount >= windows.Length) 
             ResolveOutcome();
     }
 
     private void HandleCashOutClicked()
     {
-        int currentAmount = GetCurrentReward();
-        LockTicket(currentAmount, "scratch ticket cash out");
+        if (!isResolved)
+        {
+            int currentAmount = GetCurrentReward();
+            LockTicket(currentAmount, "scratch ticket cash out");
+        }
         
         if (deskObjectFocus != null) deskObjectFocus.Unfocus();
-        
         gameObject.SetActive(false);
     }
 
@@ -133,20 +128,13 @@ public class ScratchTicket : MonoBehaviour
     {
         if(payoutText == null) return;
         
-        int displayedAmount = Mathf.RoundToInt((float)rolledPayout * revealedCount / windows.Length);
-        payoutText.text = $"${displayedAmount}";
+        payoutText.text = $"${GetCurrentReward()}";
     }
 
     private void ResolveOutcome()
     {
         if (isResolved) return;
-        isResolved = true;
-        
-        foreach (var window in windows)
-        {
-            if (!window.IsCompleted) window.ForceReveal();
-        }
-        
+
         LockTicket(GetCurrentReward(), "scratch ticket payout");
     }
 

@@ -169,9 +169,9 @@ MonoBehaviour:
   ticketPool:
   - {fileID: 8104511679692514021}
   - {fileID: 3144520575247802121}
-  spawnRangeMin: {x: -4, y: -3}
-  spawnRangeMax: {x: 4, y: 3}
-  pawnValue: 20
+  spawnRangeMin: {x: -5, y: -4}
+  spawnRangeMax: {x: 0, y: 0}
+  pawnValue: 180
 --- !u!1001 &3149363069475148367
 PrefabInstance:
   m_ObjectHideFlags: 0
